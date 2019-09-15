@@ -4,14 +4,13 @@ const router = express.Router()
 
 router.get('/', function(req, res)
 {
-    console.log(__dirname)
     res.sendFile(__dirname + '/form.html')
 })
 
-router.post('/form', [
-    check('name').isLength({ min: 3}),
-    check('email').isEmail(),
-    check('age').isNumeric()
+router.post('/form', [  //trim escape nromalize Email are all sanitizers
+    check('name').isLength({ min: 3}).trim().escape(),
+    check('email').isEmail().normalizeEmail(),
+    check('age').isNumeric().trim().escape()
 ], (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty())
@@ -20,9 +19,12 @@ router.post('/form', [
         return res.status(422).json({ errors: errors.array() })
     }
     console.log("within form")
-    const name  = req.body.name
-    const email = req.body.email
-    const age   = req.body.age
+    const name  = req.sanitize(req.body.name)  //get rid js script i guess?
+    const email = req.sanitize(req.body.email) //refine later
+    const age   = req.sanitize(req.body.age)
+    console.log("name" + name)
+    console.log("email" + email)
+    console.log("age" + age)
 })
 
 module.exports = router
