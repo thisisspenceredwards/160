@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false);
 const express = require('express');
 var cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const Data = require('./data');
-
 const API_PORT = 3001;
 const app = express();
 app.use(cors());
@@ -14,7 +14,7 @@ const router = express.Router();
 const dbRoute = 'mongodb+srv://admin:Spooky12@cluster0-j7htk.mongodb.net/test?retryWrites=true&w=majority'
 // connects our back end code with the database
 
-mongoose.connect(dbRoute, {useNewUrlParser: true });
+mongoose.connect(dbRoute, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
 
 let db = mongoose.connection;
 
@@ -51,16 +51,25 @@ router.post('/updateData', (req, res) => {
 // this is our delete method
 // this method removes existing data in our database
 router.delete('/deleteData', (req, res) => {
+  //console.log("backend")
   const { id } = req.body;
-  Data.findByIdAndRemove(id, (err) => {
-    if (err) return res.send(err);
-    return res.json({ success: true });
+  Data.findByIdAndRemove( id, (err) => {
+    if (err)
+    {
+       // console.log("data not here" + id);
+        return res.send(err);
+    }
+    else
+    {
+       // console.log("data success: " + id);
+        return res.json({ success: true });
+    }
   });
 });
 
 // this is our create methid
 // this method adds new data in our database
-router.post('/putData', (req, res) => {
+router.put('/putData', (req, res) => {
   let data = new Data();
 
   const { id, message } = req.body;

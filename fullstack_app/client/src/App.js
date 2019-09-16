@@ -56,7 +56,7 @@ class App extends Component {
       ++idToBeAdded;
     }
 
-    axios.post('http://localhost:3001/api/putData', {
+    axios.put('http://localhost:3001/api/putData', {
       id: idToBeAdded,
       message: message,
     });
@@ -64,18 +64,26 @@ class App extends Component {
 
   // our delete method that uses our backend api
   // to remove existing database information
-  deleteFromDB = (idTodelete) => {
-    parseInt(idTodelete);
-    let objIdToDelete = null;
-    this.state.data.forEach((dat) => {
-      if (dat.id === idTodelete) {
-        objIdToDelete = dat._id;
-      }
-    });
-
-    axios.delete('http://localhost:3001/api/deleteData', {
-      data: {
-        id: objIdToDelete,
+  deleteFromDB = (idToDelete) =>
+  {
+      //console.log("front end");
+      let objIdToDelete = null ;
+      idToDelete = parseInt(idToDelete)
+      this.state.data.forEach((dat) =>
+      {
+         // console.log("this is dat: " + typeof(dat.id));
+          if (dat.id === idToDelete)
+          {
+              objIdToDelete = dat._id;
+        //      console.log('dat.id === idToDelete');
+          //    console.log(objIdToDelete);
+          }
+      });
+      //console.log("objectIdToDelete: " + objIdToDelete);
+      axios.delete('http://localhost:3001/api/deleteData', {
+      data:
+      {
+          id: objIdToDelete,
       },
     });
   };
