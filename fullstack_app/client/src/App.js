@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Navigation from './components/Navigation';
-import axios from 'axios';
+import Register from './components/Register';
+import Signin from './components/Signin';
 
 // Initialize state. Can add more properties later
 const initialState = {
