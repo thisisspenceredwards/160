@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Navigation from './components/Navigation';
 import Register from './components/Register';
 import Signin from './components/Signin';
+import './App.css';
 
 // Initialize state. Can add more properties later
 const initialState = {
@@ -38,24 +39,23 @@ class App extends Component {
   }
 
   render() {
-    const { isSignedIn } = this.state;
+    const { isSignedIn, route } = this.state;
     return (
       <div className="App">
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
-        { route === 'home' ?
-          <div>
+        { route === 'home'
+          ? <div>
             <p>NOT IMPLEMENTED YET</p>
           </div>
-          : 
-          ((route === 'signin' || route === 'signout') ?
-            <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} /> :
-            <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange />
+          : (
+            (route === 'signin' || route === 'signout')
+            ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+            : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
           )
-      }
+        }
       </div>
     );
   }
-
 }
 
 export default App;
