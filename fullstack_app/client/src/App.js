@@ -92,8 +92,10 @@ class App extends Component {
   // to overwrite existing data base information
   updateDB = (idToUpdate, updateToApply) => {
     let objIdToUpdate = null;
-    parseInt(idToUpdate);
+    idToUpdate = parseInt(idToUpdate);
     this.state.data.forEach((dat) => {
+     // console.log("dat.id: " + dat.id + " " + typeof(dat.id));
+     // console.log("idToUpdate: " + idToUpdate + " " + typeof(idToUpdate));
       if (dat.id === idToUpdate) {
         objIdToUpdate = dat._id;
       }
