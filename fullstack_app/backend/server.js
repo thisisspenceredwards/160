@@ -1,17 +1,22 @@
 const mongoose = require('mongoose');
-mongoose.set('useFindAndModify', false);
 const express = require('express');
-var cors = require('cors');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
-
-const models = require('./data');
-const Data = models.Data;
-const User = models.User;
-
 const API_PORT = 3001;
 const app = express();
+const userAPI = require('./userAPI.js')
+
+mongoose.set('useFindAndModify', false);
+
 app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(logger('dev'));
+
+
+
+
 const router = express.Router();
 
 // this is our MongoDB database
@@ -29,19 +34,18 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // (optional) only made for logging and
 // bodyParser, parses the request body to be a readable json format
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(logger('dev'));
 
+/*
 const fail_json = {
   success: false,
   error: 'INVALID INPUTS',
 };
-const success_json = { success: true };
+*/
+//const success_json = { success: true };
 
 // this is our create methid
 // this method adds new data in our database
-router.put('/putUser', (req, res) => {
+/*router.put('/putUser', (req, res) => {
   // let data = new Data();
   let user = new User();
 
@@ -65,11 +69,11 @@ router.put('/putUser', (req, res) => {
     return res.json(success_json);
   });
 });
-
+*/
 
 // this is our create methid
 // this method adds new data in our database
-router.put('/putData', (req, res) => {
+/*router.put('/putData', (req, res) => {
   let data = new Data();
 
   const { id, message } = req.body;
@@ -126,10 +130,11 @@ router.delete('/deleteData', (req, res) => {
     }
   });
 });
-
+*/
 
 // append /api for our http requests
 app.use('/api', router);
+app.use('/api', userAPI)
 
 // launch our backend into a port
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
