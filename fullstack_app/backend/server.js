@@ -4,14 +4,19 @@ const express = require('express');
 var cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
-const Data = require('./data');
+
+const models = require('./data');
+const Data = models.Data;
+const User = models.User;
+
 const API_PORT = 3001;
 const app = express();
 app.use(cors());
 const router = express.Router();
 
 // this is our MongoDB database
-const dbRoute = 'mongodb+srv://admin:Spooky12@cluster0-j7htk.mongodb.net/test?retryWrites=true&w=majority'
+// const dbRoute = 'mongodb+srv://admin:Spooky12@cluster0-j7htk.mongodb.net/test?retryWrites=true&w=majority'
+const dbRoute = 'mongodb://localhost/blind'
 // connects our back end code with the database
 
 mongoose.connect(dbRoute, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
@@ -28,6 +33,62 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
+
+const fail_json = {
+  success: false,
+  error: 'INVALID INPUTS',
+};
+const success_json = { success: true };
+
+// this is our create methid
+// this method adds new data in our database
+router.put('/putUser', (req, res) => {
+  // let data = new Data();
+  let user = new User();
+
+  const {
+    id,
+    username,
+    password,
+    email
+  } = req.body;
+
+  // if ((!id && id !== 0) || !message) {
+  //   return res.json(fail_json);
+  // }
+  user.id = id;
+  user.username = username;
+  user.password = password;
+  user.email = email;
+
+  user.save((err) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json(success_json);
+  });
+});
+
+
+// this is our create methid
+// this method adds new data in our database
+router.put('/putData', (req, res) => {
+  let data = new Data();
+
+  const { id, message } = req.body;
+
+  if ((!id && id !== 0) || !message) {
+    return res.json({
+      success: false,
+      error: 'INVALID INPUTS',
+    });
+  }
+  data.message = message;
+  data.id = id;
+  data.save((err) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true });
+  });
+});
+
 
 // this is our get method
 // this method fetches all available data in our database
@@ -67,26 +128,6 @@ router.delete('/deleteData', (req, res) => {
   });
 });
 
-// this is our create methid
-// this method adds new data in our database
-router.put('/putData', (req, res) => {
-  let data = new Data();
-
-  const { id, message } = req.body;
-
-  if ((!id && id !== 0) || !message) {
-    return res.json({
-      success: false,
-      error: 'INVALID INPUTS',
-    });
-  }
-  data.message = message;
-  data.id = id;
-  data.save((err) => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true });
-  });
-});
 
 // append /api for our http requests
 app.use('/api', router);

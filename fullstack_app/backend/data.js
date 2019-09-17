@@ -9,6 +9,17 @@ const DataSchema = new Schema(
   },
   { timestamps: true }
 );
+const UserSchema = new Schema(
+  {
+    id: Number,
+    username: String,
+    password: String,
+    email: String
+  },
+  { timestamps: true }
+);
 
 // export the new Schema so we could modify it using Node.js
-module.exports = mongoose.model("Data", DataSchema)
+// module.exports = mongoose.model("Data", DataSchema)
+exports.Data = mongoose.model("Data", DataSchema);
+exports.User = mongoose.model("User", UserSchema);
