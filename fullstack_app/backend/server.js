@@ -15,8 +15,7 @@ app.use(cors());
 const router = express.Router();
 
 // this is our MongoDB database
-// const dbRoute = 'mongodb+srv://admin:Spooky12@cluster0-j7htk.mongodb.net/test?retryWrites=true&w=majority'
-const dbRoute = 'mongodb://localhost/blind'
+const dbRoute = 'mongodb+srv://admin:Spooky12@cluster0-j7htk.mongodb.net/test?retryWrites=true&w=majority'
 // connects our back end code with the database
 
 mongoose.connect(dbRoute, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
