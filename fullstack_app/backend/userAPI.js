@@ -6,13 +6,13 @@ const Data = models.Data
 const User = models.User
 
 router.put('/putUser', (req, res) =>
-{
+{   //hash passwords//
     let user = new User()
     console.log(req.body)
     const { id, username, password, email } = req.body
     user.id = id
     user.username = username
-    userpassword = password
+    user.password = password
     user.email = email
     user.save((err) => {
     if (err) return res.json(constants.FAIL_JSON)
@@ -20,27 +20,41 @@ router.put('/putUser', (req, res) =>
     })
 })
 
-router.get('/getUser', (req, res) =>
+router.get('/doesUsernameExist', (req, res) =>
 {
-    Data.find((err, data) => {
-    if(err) return res.json(constants.FAIL_JSON)
-    else return res.json(constants.SUCCESS_JSON, { data: data })
+    console.log("doesUsernameExist")
+    const username = req.query.username
+    console.log("username is: " + username)
+    const user = User.find({"username": username}, function(err, results)
+    {
+        if(err) return res.json(constants.FAIL_JSON)
+        else
+        {
+            try
+            {
+                console.log((results[0].toObject()))
+                const ob = results[0].toObject()
+                if(ob.username === username) return res.json(constants.SUCCESS_JSON)
+                else return res.json(constants.FAIL_JSON)
+            }
+            catch
+            {
+                return res.json(constants.FAIL_JSON)
+            }
+        }
     })
 })
+
+
+/*
+            //console.log("this is ob: " + ob.username)
+            //return res.send(results[0].toObject())
+*/
+
 
 module.exports = router
 
 /*
-
-// this is our get method
-// this method fetches all available data in our database
-router.get('/getData', (req, res) => {
-  Data.find((err, data) => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true, data: data });
-  });
-});
-
 // this is our update method
 // this method overwrites existing data in our database
 router.post('/updateData', (req, res) => {
@@ -69,6 +83,19 @@ router.delete('/deleteData', (req, res) => {
     }
   });
 });
+*/
+
+
+// this is our get method
+// this method fetches all available data in our database
+/*
+router.get('/getData', (req, res) => {
+  Data.find((err, data) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
+});
 
 */
+
 
