@@ -23,8 +23,8 @@ class Register extends React.Component {
 	}	
 
 	onSubmitSignIn = () => {
-		fetch('http://localhost:3001/api', {
-			method: 'post',
+		fetch('http://localhost:3001/api/putUser', {
+			method: 'put',
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({
 				email: this.state.email,
