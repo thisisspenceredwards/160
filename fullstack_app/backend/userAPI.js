@@ -20,12 +20,21 @@ router.put('/putUser', (req, res) =>
     })
 })
 
-router.get('/doesUsernameExist', (req, res) =>
+
+router.get('/emailInDB', (req, res) =>
+{
+    console.log("emailInDB")
+    const email = req.query.email
+    console.log(email)
+    return res.json(constants.SUCCESS_JSON)
+})
+
+router.get('/userInDB', (req, res) =>
 {
     console.log("doesUsernameExist")
     const username = req.query.username
     console.log("username is: " + username)
-    const user = User.findOne({"username": username}, function(err, results)
+    User.findOne({"username": username}, function(err, results)
     {
         if(err) return res.json(constants.FAIL_JSON)
         else
