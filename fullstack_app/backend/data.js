@@ -14,10 +14,12 @@ const UserSchema = new Schema(
     id: Number,
     username: String,
     password: String,
-    email: String
+    email: String,
   },
-  { timestamps: true }
+  { timestamps: true },
+
 );
+
 
 // export the new Schema so we could modify it using Node.js
 // module.exports = mongoose.model("Data", DataSchema)

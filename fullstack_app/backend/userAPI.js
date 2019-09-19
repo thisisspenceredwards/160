@@ -25,15 +25,15 @@ router.get('/doesUsernameExist', (req, res) =>
     console.log("doesUsernameExist")
     const username = req.query.username
     console.log("username is: " + username)
-    const user = User.find({"username": username}, function(err, results)
+    const user = User.findOne({"username": username}, function(err, results)
     {
         if(err) return res.json(constants.FAIL_JSON)
         else
         {
             try
             {
-                console.log((results[0].toObject()))
-                const ob = results[0].toObject()
+                console.log((results.toObject()))
+                const ob = results.toObject()
                 if(ob.username === username) return res.json(constants.SUCCESS_JSON)
                 else return res.json(constants.FAIL_JSON)
             }
@@ -44,13 +44,6 @@ router.get('/doesUsernameExist', (req, res) =>
         }
     })
 })
-
-
-/*
-            //console.log("this is ob: " + ob.username)
-            //return res.send(results[0].toObject())
-*/
-
 
 module.exports = router
 
