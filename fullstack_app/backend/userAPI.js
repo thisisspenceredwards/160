@@ -47,7 +47,7 @@ router.post('/login', async (req, res) =>
     if(checkUsername === false || checkPassword === false) 
     {
         console.log("Unsuccessful login")
-        return res.json(constants.BAD_USERNAME_OR_PASSWORD_JSON)
+        return res.send("Unsuccessful login"))
     }
     else
     {
