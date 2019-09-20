@@ -32,32 +32,15 @@ class authentication
     static async checkPassword(username, password)
     {
         let result = ""
-        let  hashedPassword = ""
         try
-        {
-            hashedPassword = authentication.hashPassword(password)
-            console.log(hashedPassword)
-        }
-        catch
-        {
-            console.log("error????")
-            result = false
-        }
-        try
-        {    await User.findOne({ 'username' : username }).exec().then((data) =>
+        {     await User.findOne({ 'username' : username }).exec().then((data) =>
             { 
-                console.log(data)
-                console.log("username: " + data.username)
-                console.log("data.password: " + data.password)
-                console.log("input password: " + hashedPassword)
-                if( bcrypt.compareSync(hashedPassword, data.password))
+                if( bcrypt.compareSync(password, hashedPassword))
                 {
-                       console.log("passwords are equal")
                        result = true
                 }
                 else
                 {
-                    console.log("passwords are not equal")
                     result = false
                 }
             }).catch(function(err)
@@ -74,8 +57,7 @@ class authentication
         return result
     }
     static hashPassword(password) //could figure out Async to speed up execution, but right this method does not 
-                                 //return quickly enough to catch the User.save
-    {
+    {                             //return quickly enough to catch the User.save
             const saltRounds = 10;
             return bcrypt.hashSync(password, saltRounds) //, function(err, hash){ console.log(hash); return  hash}) 
     }

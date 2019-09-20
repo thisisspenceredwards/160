@@ -15,45 +15,35 @@ router.put('/putUser', [
     ], async (req, res) =>
 {
     const errors = validationResult(req)
-    console.log(errors)
     if (!errors.isEmpty())
     {
         return res.status(422).json(errors) // must work on this
     }
     let user = new User()
-    console.log(req.body)
     const { id, username, password, email } = req.body
     const checkUsername = await Authentication.checkUsername(username)
     const checkEmail = await Authentication.checkEmail(email)
-    console.log("checkUsername: " + checkUsername)
-    console.log("checkEmail: " + checkEmail)
-    if(checkUsername || checkEmail === true) return res.json(constants.BAD_USERNAME_JSON +" or "+ constants.BAD_EMAIL_JSON)
+    if(checkUsername || checkEmail === true)
+        return res.json(constants.BAD_USERNAME_JSON +" or "+ constants.BAD_EMAIL_JSON)
     else
     {
         user.id = id
         user.username = username
         user.password = Authentication.hashPassword(password)
-        console.log(user.password)
         user.email = email
         user.save((err) =>
          {
             if (err) return res.json(constants.FAIL_JSON)
             else return res.json(constants.SUCCESS_JSON)
          })
-        console.log(user)
      }
  })
 
 router.post('/login', async (req, res) =>
 {
     const { username, password } = req.body
-    console.log(req.body)
-    console.log( username )
-    console.log(password)
     const checkUsername = await Authentication.checkUsername(username)
     const checkPassword = await Authentication.checkPassword(username, password)
-    console.log("CheckUsername: " + checkUsername)
-    console.log("checkPassword: " + checkPassword)
     if(checkUsername === false || checkPassword === false) 
         return res.send(constants.BAD_USERNAME_OR_PASSWORD_JSON)
     else
