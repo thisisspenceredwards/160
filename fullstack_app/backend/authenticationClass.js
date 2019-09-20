@@ -8,51 +8,56 @@ class authentication
 {
     static checkEmail(email)
     {
-        try{ const result = User.findOne({ 'email': email }).exec().then((data) =>{
-               if(data.email != null) 
-                   return true
-               else return false}).catch
-               (function(err){return false})
-                   return result
-           }
+        let result = ""
+        try
+        {
+             result = User.findOne({ 'email': email }).exec().then((data) =>
+             {
+                 if(data.email != null) 
+                    return true
+                 else 
+                     return false
+             }).catch(function(err){ result = false })
+        }
         catch(err){ return false}
+        console.log(result)
+        return result
     }
+
     static checkUsername(username)
     {
-        try{  const result = User.findOne({ 'username' : username }).exec().then((data) =>{
+        let result = ""
+        try
+        {
+            result = User.findOne({ 'username' : username }).exec().then((data) =>
+            {
                 if(data.username != null)
-                    return true;
-                else return false}).catch
-                (function(err){return false})
-                    return result
-           }
+                    return true
+                else
+                    return false
+            }).catch(function(err){return false})
+        }
         catch(err){ return false }
+        return result
     }
 
     static async checkPassword(username, password)
     {
         let result = ""
         try
-        {     await User.findOne({ 'username' : username }).exec().then((data) =>
-            { 
-                if( bcrypt.compareSync(password, data.password))
-                {
-                       result = true
-                }
-                else
-                {
-                    result = false
-                }
-            }).catch(function(err)
+        {
+            result = await User.findOne({ 'username' : username }).exec().then((data) =>
             {
-               console.log(err)
-               result = false
-            })
+                if( data != null && bcrypt.compareSync(password, data.password))
+                    return true
+                else
+                    return false
+            }).catch(function(err){ console.log(err); return false })
         }
         catch(err)
         {
             console.log(err)
-            result = false
+            return false
         }
         return result
     }
