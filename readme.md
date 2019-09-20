@@ -18,4 +18,4 @@ will create a user
 
 requests.post('http://localhost:3001/api/login', {'username': 'jeffy', 'password': '12345'}).text)
 
-will allow a user to 'login' currentl will only check and verify credentials and return a success or failure message 
+will allow a user to 'login' currently will only check and verify credentials and return a success or failure message 
