@@ -8,6 +8,7 @@ const app = express();
 const userAPI = require('./userAPI.js')
 
 mongoose.set('useFindAndModify', false);
+mongoose.Promise = global.Promise
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));

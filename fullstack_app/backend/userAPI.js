@@ -1,32 +1,127 @@
 const express = require('express')
+const { check, validationResult } = require('express-validator')
 const models = require('./data')
+const authenticationFile = require('./authenticationClass')
 const constants = require('./constants')
 const router = express.Router()
 const Data = models.Data
 const User = models.User
+const Authentication = authenticationFile.authentication
 
-router.put('/putUser', (req, res) =>
-{   //hash passwords//
+router.put('/putUser', [
+    check('username').isLength({ min:3 }).withMessage('Name must have more than 3 characters'),
+    check('email').isEmail().normalizeEmail().withMessage('Email is not valid'),
+    check('password').isLength({min: 5}).withMessage('Password must be more than 5 characters long')
+    ], async (req, res) =>
+{
+    const errors = validationResult(req)
+    console.log(errors)
+    if (!errors.isEmpty())
+    {
+        return res.status(422).json(errors) // must work on this
+    }
     let user = new User()
     console.log(req.body)
     const { id, username, password, email } = req.body
-    user.id = id
-    user.username = username
-    user.password = password
-    user.email = email
-    user.save((err) => {
-    if (err) return res.json(constants.FAIL_JSON)
-    return res.json(constants.SUCCESS_JSON)
-    })
+    const checkUsername = await Authentication.checkUsername(username)
+    const checkEmail = await Authentication.checkEmail(email)
+    console.log("checkUsername: " + checkUsername)
+    console.log("checkEmail: " + checkEmail)
+    if(checkUsername || checkEmail === true) return res.json(constants.BAD_USERNAME_JSON +" or "+ constants.BAD_EMAIL_JSON)
+    else
+    {
+        user.id = id
+        user.username = username
+        user.password = Authentication.hashPassword(password)
+        console.log(user.password)
+        user.email = email
+        user.save((err) =>
+         {
+            if (err) return res.json(constants.FAIL_JSON)
+            else return res.json(constants.SUCCESS_JSON)
+         })
+        console.log(user)
+     }
+ })
+
+router.post('/login', async (req, res) =>
+{
+    const { username, password } = req.body
+    console.log(req.body)
+    console.log( username )
+    console.log(password)
+    const checkUsername = await Authentication.checkUsername(username)
+    const checkPassword = await Authentication.checkPassword(username, password)
+    console.log("CheckUsername: " + checkUsername)
+    console.log("checkPassword: " + checkPassword)
+    if(checkUsername === false || checkPassword === false) 
+        return res.send(constants.BAD_USERNAME_OR_PASSWORD_JSON)
+    else
+        return res.send(constants.SUCCESS)
 })
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 router.get('/emailInDB', (req, res) =>
 {
     console.log("emailInDB")
     const email = req.query.email
     console.log(email)
-    return res.json(constants.SUCCESS_JSON)
+    User.findOne({"email": email}, function(err, results)
+    {
+        if(err) return res.json(constants.FAIL_JSON)
+        else
+        {
+            try
+            {
+                console.log((results.toObject()))
+                const ob = results.toObject()
+                if(ob.email === email) return res.json(constants.SUCCESS_JSON)
+                else return res.json(constants.FAIL_JSON)
+            }
+            catch
+            {
+                return res.json(constants.FAIL_JSON)
+            }
+        }
+    })
 })
 
 router.get('/userInDB', (req, res) =>
@@ -53,7 +148,7 @@ router.get('/userInDB', (req, res) =>
         }
     })
 })
-
+*/
 module.exports = router
 
 /*
