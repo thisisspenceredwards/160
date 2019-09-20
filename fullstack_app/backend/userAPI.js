@@ -45,11 +45,18 @@ router.post('/login', async (req, res) =>
     const checkUsername = await Authentication.checkUsername(username)
     const checkPassword = await Authentication.checkPassword(username, password)
     if(checkUsername === false || checkPassword === false) 
-        return res.send(constants.BAD_USERNAME_OR_PASSWORD_JSON)
+    {
+        console.log("Unsuccessful login")
+        return res.json(constants.BAD_USERNAME_OR_PASSWORD_JSON)
+    }
     else
-        return res.send(constants.SUCCESS)
+    {
+        console.log("SUCCESS!")
+        return res.send("Successful login")
+    }
 })
 
+module.exports = router
 
 
 
@@ -139,7 +146,6 @@ router.get('/userInDB', (req, res) =>
     })
 })
 */
-module.exports = router
 
 /*
 // this is our update method

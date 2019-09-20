@@ -35,7 +35,7 @@ class authentication
         try
         {     await User.findOne({ 'username' : username }).exec().then((data) =>
             { 
-                if( bcrypt.compareSync(password, hashedPassword))
+                if( bcrypt.compareSync(password, data.password))
                 {
                        result = true
                 }
