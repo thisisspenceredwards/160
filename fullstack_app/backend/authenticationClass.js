@@ -4,9 +4,9 @@ const bcrypt = require('bcrypt')
 const models = require('./data')
 const User = models.User
 
-class authentication
+class Authentication
 {
-    static checkEmail(email)
+    checkEmail(email)
     {
         let result = ""
         try
@@ -24,7 +24,7 @@ class authentication
         return result
     }
 
-    static checkUsername(username)
+    checkUsername(username)
     {
         let result = ""
         try
@@ -41,7 +41,7 @@ class authentication
         return result
     }
 
-    static async checkPassword(username, password)
+    async checkPassword(username, password)
     {
         let result = ""
         try
@@ -61,11 +61,11 @@ class authentication
         }
         return result
     }
-    static hashPassword(password) //could figure out Async to speed up execution, but right this method does not 
+    hashPassword(password) //could figure out Async to speed up execution, but right this method does not 
     {                             //return quickly enough to catch the User.save
             const saltRounds = 10;
             return bcrypt.hashSync(password, saltRounds) //, function(err, hash){ console.log(hash); return  hash}) 
     }
 }
 
-module.exports.authentication = authentication
+module.exports.Authentication = Authentication

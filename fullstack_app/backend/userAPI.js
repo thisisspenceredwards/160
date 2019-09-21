@@ -6,7 +6,7 @@ const constants = require('./constants')
 const router = express.Router()
 const Data = models.Data
 const User = models.User
-const Authentication = authenticationFile.authentication
+const Authentication = authenticationFile.Authentication
 
 router.put('/putUser', [
     check('username').isLength({ min:3 }).withMessage('Name must have more than 3 characters'),
@@ -20,16 +20,19 @@ router.put('/putUser', [
         return res.status(422).json(errors) // must work on this
     }
     let user = new User()
+    let authentication = new Authentication() //This may be unnecessary im not sure
+                                             // make multiple authentication objects
+                                             // to handle concurrent authentications? 
     const { id, username, password, email } = req.body
-    const checkUsername = await Authentication.checkUsername(username)
-    const checkEmail = await Authentication.checkEmail(email)
+    const checkUsername = await authentication.checkUsername(username)
+    const checkEmail = await authentication.checkEmail(email)
     if(checkUsername || checkEmail === true)
         return res.json(constants.BAD_USERNAME_JSON +" or "+ constants.BAD_EMAIL_JSON)
     else
     {
         user.id = id
         user.username = username
-        user.password = Authentication.hashPassword(password)
+        user.password = authentication.hashPassword(password)
         user.email = email
         user.save((err) =>
          {
@@ -41,9 +44,10 @@ router.put('/putUser', [
 
 router.post('/login', async (req, res) =>
 {
+    let authentication = new Authentication()
     const { username, password } = req.body
-    const checkUsername = await Authentication.checkUsername(username)
-    const checkPassword = await Authentication.checkPassword(username, password)
+    const checkUsername = await authentication.checkUsername(username)
+    const checkPassword = await authentication.checkPassword(username, password)
     if(checkUsername === false || checkPassword === false) 
     {
         console.log("Unsuccessful login")
