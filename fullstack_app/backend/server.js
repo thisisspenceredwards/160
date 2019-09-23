@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const API_PORT = 3001;
 const app = express();
-const userAPI = require('./userAPI.js')
+const userAPI = require('./userAPI.js');
+const topicAPI = require('./topicAPI.js');
 
 mongoose.set('useFindAndModify', false);
 mongoose.Promise = global.Promise
@@ -23,7 +24,9 @@ router.get('/getData', (req, res) => {
   });
 });
 // this is our MongoDB database
+//
 const dbRoute = 'mongodb+srv://admin:Spooky12@cluster0-j7htk.mongodb.net/test?retryWrites=true&w=majority'
+
 // connects our back end code with the database
 
 mongoose.connect(dbRoute, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
@@ -40,7 +43,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // append /api for our http requests
 app.use('/api', router);
-app.use('/api', userAPI)
-
+app.use('/api', userAPI);
+app.use('/api', topicAPI);
 // launch our backend into a port
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));

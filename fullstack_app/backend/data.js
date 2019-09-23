@@ -20,8 +20,17 @@ const UserSchema = new Schema(
 
 );
 
-
+const TopicSchema = new Schema(
+  {
+    id: Number,
+    topicOrgId: Number,
+    topicName: String,
+  },
+  { timestamps: true },
+);
 // export the new Schema so we could modify it using Node.js
 // module.exports = mongoose.model("Data", DataSchema)
+
 exports.Data = mongoose.model("Data", DataSchema);
 exports.User = mongoose.model("User", UserSchema);
+exports.Topic = mongoose.model("Topic", TopicSchema);
