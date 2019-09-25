@@ -9,6 +9,20 @@ const DataSchema = new Schema(
   },
   { timestamps: true }
 );
+
+const OrganizationSchema = new Schema(
+  {
+    id: Number,
+    name: String,
+    location: String,
+    address: String,
+    description: String,
+    establishedDate: Date
+  },
+  { timestamps: true }
+);
+
+
 const UserSchema = new Schema(
   {
     id: Number,
@@ -32,5 +46,6 @@ const TopicSchema = new Schema(
 // module.exports = mongoose.model("Data", DataSchema)
 
 exports.Data = mongoose.model("Data", DataSchema);
+exports.OrganizationSchema = mongoose.model("Organization", OrganizationSchema);
 exports.User = mongoose.model("User", UserSchema);
 exports.Topic = mongoose.model("Topic", TopicSchema);
