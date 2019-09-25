@@ -45,13 +45,14 @@ router.put('/putUser', [
 router.post('/login', async (req, res) =>
 {
     let authentication = new Authentication()
-    const { username, password } = req.body
-    const checkUsername = await authentication.checkUsername(username)
-    const checkPassword = await authentication.checkPassword(username, password)
-    if(checkUsername === false || checkPassword === false) 
+    const { email, password } = req.body
+    const checkEmail = await authentication.checkEmail(email)
+    const checkPassword = await authentication.checkPassword(email, password)
+    let message = "";
+    if(checkEmail === false || checkPassword === false) 
     {
         console.log("Unsuccessful login")
-        return res.send("Unsuccessful login")
+        return res.status(401).send("Unsuccessful login")
     }
     else
     {

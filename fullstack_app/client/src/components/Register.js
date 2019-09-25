@@ -6,12 +6,12 @@ class Register extends React.Component {
 		this.state = {
 			email: '',
 			password: '',
-			name: ''
+			username: ''
 		}
 	}
 
-	onNameChange = (event) => {
-		this.setState({name: event.target.value})
+	onUsernameChange = (event) => {
+		this.setState({username: event.target.value})
 	}
 
 	onEmailChange = (event) => {
@@ -29,7 +29,7 @@ class Register extends React.Component {
 			body: JSON.stringify({
 				email: this.state.email,
 				password: this.state.password,
-				name: this.state.name
+				username: this.state.username
 			})
 		})
 		.then(response => response.json())
@@ -49,13 +49,13 @@ class Register extends React.Component {
 				    <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
 				      <legend className="f1 fw6 ph0 mh0">Register</legend>
 				      <div className="mt3">
-				        <label className="db fw6 lh-copy f6" htmlFor="name">Name</label>
+				        <label className="db fw6 lh-copy f6" htmlFor="username">Username</label>
 				        <input 
 				        	className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
 				        	type="text" 
-				        	name="name"  
-				        	id="name" 
-				        	onChange={this.onNameChange}
+				        	name="username"  
+				        	id="username" 
+				        	onChange={this.onUsernameChange}
 				        />
 				      </div>		      
 				      <div className="mt3">

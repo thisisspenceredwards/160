@@ -41,24 +41,21 @@ class Authentication
         return result
     }
 
-    async checkPassword(username, password)
+    async checkPassword(email, password)
     {
         let result = ""
         try
         {
-            result = await User.findOne({ 'username' : username }).exec().then((data) =>
+            result = await User.findOne({ 'email' : email }).exec().then((data) =>
             {
                 if( data != null && bcrypt.compareSync(password, data.password))
                     return true
                 else
                     return false
-            }).catch(function(err){ console.log(err); return false })
+            }).catch(function(err){ return false })
         }
         catch(err)
-        {
-            console.log(err)
-            return false
-        }
+        { return false }
         return result
     }
     hashPassword(password) //could figure out Async to speed up execution, but right this method does not 

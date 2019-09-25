@@ -26,6 +26,7 @@ const OrganizationSchema = new Schema(
 const UserSchema = new Schema(
   {
     id: Number,
+    orgId: Number,
     username: String,
     password: String,
     email: String,
@@ -42,6 +43,17 @@ const TopicSchema = new Schema(
   },
   { timestamps: true },
 );
+
+const PostSchema = new Schema(
+  {
+    id: Number,
+    topicId: Number,
+    userId: Number,
+    subject: String,
+    body: String,
+  },
+  { timestamps: true },
+);
 // export the new Schema so we could modify it using Node.js
 // module.exports = mongoose.model("Data", DataSchema)
 
@@ -49,3 +61,4 @@ exports.Data = mongoose.model("Data", DataSchema);
 exports.OrganizationSchema = mongoose.model("Organization", OrganizationSchema);
 exports.User = mongoose.model("User", UserSchema);
 exports.Topic = mongoose.model("Topic", TopicSchema);
+exports.Post = mongoose.model("Post", PostSchema);
