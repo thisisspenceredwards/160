@@ -3,9 +3,11 @@ Endpoints:
 * api/organization
 * api/user
 * api/topic
+* api/post
 
 # Organizations
 
+Endpoint: api/organization
 Response format: JSON
 
 ## Methods
@@ -27,6 +29,7 @@ Response format: JSON
 
 # Users
 
+Endpoint: api/user
 Response format: JSON
 
 ## Methods
@@ -48,6 +51,7 @@ Response format: JSON
 
 # Topics
 
+Endpoint: api/topic
 Response format: JSON
 
 ## Methods
@@ -68,6 +72,7 @@ Response format: JSON
 
 # Posts
 
+Endpoint: api/post
 Response format: JSON
 
 ## Methods
