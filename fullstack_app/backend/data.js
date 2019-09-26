@@ -37,8 +37,7 @@ const UserSchema = new Schema(
 
 const TopicSchema = new Schema(
   {
-    id: Number,
-    topicOrgId: Number,
+    topicOrgId: Schema.Types.ObjectId,
     topicName: String,
   },
   { timestamps: true },
@@ -46,14 +45,16 @@ const TopicSchema = new Schema(
 
 const PostSchema = new Schema(
   {
-    id: Number,
-    topicId: Number,
-    userId: Number,
+    topicId: Schema.Types.ObjectId,
+    userID: Schema.Types.ObjectId,
     subject: String,
+    createTime: { type: Date, default: Date.now() },
+    LatestUpdateTime: { type: Date, default: Date.now() },
+    parentPostId: Schema.Types.ObjectId,
     body: String,
   },
   { timestamps: true },
-);
+)
 // export the new Schema so we could modify it using Node.js
 // module.exports = mongoose.model("Data", DataSchema)
 

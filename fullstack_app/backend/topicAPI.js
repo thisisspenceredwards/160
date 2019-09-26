@@ -6,14 +6,20 @@ const constants = require('./constants')
 const router = express.Router()
 const Topic = models.Topic
 
-
 // POST method
 // create a topic 
-// @Param topicOrgID : the org ID that the topic belongs
-// @Param topicName:  the topic name
+// @input @Param topicOrgID : the org ID that the topic belongs
+// @input @Param topicName:  the topic name
 // @Output: "success: true/false"
+// example:
+// url: http://localhost:3001/api/topic/
+//{
+//    "topicOrgId": "5d893a60be54da38e9018308",
+//    "topicName": "Environment"
+//}
+
 router.post('/topic', [
-    check('topicOrgId').isNumeric().withMessage('The topicOrgId has to be number.'),
+    check('topicOrgId').isLength({ min:1 }).withMessage('The topicOrgId has to be non-empty.'),
     check('topicName').isLength({ min:1 }).withMessage('The topicName has to be non-empty.'),
     ], async (req, res) =>
 {
@@ -44,11 +50,41 @@ router.post('/topic', [
 
 // GET method
 // get the topic list from the org
-// @Param orgID : the org ID that the topic belongs
+// @input @Param topicOrgId : the org ID that the topic belongs
 // Output: the list of topic name
-router.post('/topic', async (req, res) =>
+/*
+example
+url: http://localhost:3001/api/topic?topicOrgId=5d893a60be54da38e9018308
+output JSON:
+[
+    {
+        "_id": "5d8c4a31a89f325b2309c75c",
+        "topicOrgId": "5d893a60be54da38e9018308",
+        "topicName": "Environment"
+    },
+    {
+        "_id": "5d8c4a4fa89f325b2309c75e",
+        "topicOrgId": "5d893a60be54da38e9018308",
+        "topicName": "Tuition Issues"
+    }
+]
+*/
+router.get('/topic', [], async(req, res) =>
 {
-    // TODO:
-})
-
+    const { query } = req;
+    console.log(query);
+    
+    if (query.topicOrgId != null) {
+        console.log(query.topicOrgId)
+        Topic.find( query, '_id topicOrgId topicName', (err, topics) => {
+            if (err) {
+                return res.send(err);
+            } else {
+                return res.json(topics)
+            }
+            });
+    } else {
+        return res.json(constants.FAIL_JSON)
+    }
+});
 module.exports = router
