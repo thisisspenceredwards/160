@@ -7,6 +7,7 @@ const API_PORT = 3001;
 const app = express();
 const userAPI = require('./userAPI.js');
 const topicAPI = require('./topicAPI.js');
+const orgAPI = require('./OrgAPI.js');
 
 mongoose.set('useFindAndModify', false);
 mongoose.Promise = global.Promise
@@ -45,5 +46,6 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.use('/api', router);
 app.use('/api', userAPI);
 app.use('/api', topicAPI);
+app.use('/api', orgAPI);
 // launch our backend into a port
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));

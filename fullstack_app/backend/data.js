@@ -12,16 +12,15 @@ const DataSchema = new Schema(
 
 const OrganizationSchema = new Schema(
   {
-    id: Number,
     name: String,
     location: String,
     address: String,
     description: String,
-    establishedDate: Date
+    domainName: String, // org domain name, eg. "sjsu.edu"
+    establishedDate: { type: Date, default: Date.now() }
   },
   { timestamps: true }
 );
-
 
 const UserSchema = new Schema(
   {
@@ -59,7 +58,7 @@ const PostSchema = new Schema(
 // module.exports = mongoose.model("Data", DataSchema)
 
 exports.Data = mongoose.model("Data", DataSchema);
-exports.OrganizationSchema = mongoose.model("Organization", OrganizationSchema);
+exports.Organization = mongoose.model("Organization", OrganizationSchema);
 exports.User = mongoose.model("User", UserSchema);
 exports.Topic = mongoose.model("Topic", TopicSchema);
 exports.Post = mongoose.model("Post", PostSchema);

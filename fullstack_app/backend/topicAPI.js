@@ -33,7 +33,7 @@ router.post('/topic', [
     const {topicOrgId, topicName} = req.body
     const isDuplicatedTopic = false//TODO: await authentication.checkUsername(username)
     if(isDuplicatedTopic)
-        return res.json(DUPLICATED_TOPIC_NAME_JSDON)
+        return res.json(constants.DUPLICATED_TOPIC_NAME_JSDON)
     else
     {
         topic.topicOrgId = topicOrgId
