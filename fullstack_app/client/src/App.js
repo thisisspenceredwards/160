@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Navigation from './components/Navigation';
 import Register from './components/Register';
 import Signin from './components/Signin';
+import Dashboard from './components/Dashboard'
 import './App.css';
 
 // Initialize state. Can add more properties later
@@ -45,7 +46,7 @@ class App extends Component {
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
         { route === 'home'
           ? <div>
-            <p>NOT IMPLEMENTED YET</p>
+            <Dashboard name={this.state.user.name} />
           </div>
           : (
             (route === 'signin' || route === 'signout')
