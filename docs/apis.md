@@ -25,77 +25,82 @@ Response format: JSON
 * establishedDate: Date
 
 ## Examples
-*POST Create a new organization
-// POST method
-// create a Organization 
-// @input @Param name : the Organization name
-// @input @Param location: location
-// @input @Param address:  address
-// @input @Param description:  description
-// @input @Param domainName:  domain name, eg. "sjsu.edu"
-// @Output: "success: true/false"
-// example:
-// url: http://localhost:3001/api/org/
-//{
-//    "name": "San Jose State University",
-//    "location": "San Jose",
-//    "address": "1 frist street, San Jose",
-//    "description": "Nice college",
-//    "domainName": "sjsu.edu"
-//}
+* POST Create a new organization
+```
+POST method
+create a Organization
+@input @Param name : the Organization name
+@input @Param location: location
+@input @Param address:  address
+@input @Param description:  description
+@input @Param domainName:  domain name, eg. "sjsu.edu"
+@Output: "success: true/false"
+example:
+url: http://localhost:3001/api/org/
+{
+    "name": "San Jose State University",
+    "location": "San Jose",
+    "address": "1 frist street, San Jose",
+    "description": "Nice college",
+    "domainName": "sjsu.edu"
+}
+```
 
 * GET Search for one or more organizations
-// GET method
-// get the org list
-// @input @Param OrgId : the org ID
-// Output: the org info or the list of all org info if OrgId is empty
-/*
+
+    GET method
+    get the org list
+    @input @Param OrgId : the org ID
+    Output: the org info or the list of all org info if OrgId is empty
+
 example -- get all org info
 url: http://localhost:3001/api/org
 output JSON:
-[
-    {
-        "establishedDate": "2019-09-27T21:37:32.862Z",
-        "_id": "5d8e815b6854909ffb0f5755",
-        "name": "San Jose State University",
-        "location": "San Jose",
-        "address": "1 first street, San Jose",
-        "description": "Nice college",
-        "domainName": "sjsu.edu",
-        "createdAt": "2019-09-27T21:38:35.714Z",
-        "updatedAt": "2019-09-27T21:38:35.714Z",
-        "__v": 0
-    },
-    {
-        "establishedDate": "2019-09-27T21:59:37.438Z",
-        "_id": "5d8e86d5ac3936a0e34708af",
-        "name": "Santa Clara University",
-        "location": "Santa Clara",
-        "address": "1 first street, Santa Clara",
-        "description": "Nice college",
-        "domainName": "scu.edu",
-        "createdAt": "2019-09-27T22:01:57.499Z",
-        "updatedAt": "2019-09-27T22:01:57.499Z",
-        "__v": 0
-    }
-]
+
+    [
+        {
+            "establishedDate": "2019-09-27T21:37:32.862Z",
+            "_id": "5d8e815b6854909ffb0f5755",
+            "name": "San Jose State University",
+            "location": "San Jose",
+            "address": "1 first street, San Jose",
+            "description": "Nice college",
+            "domainName": "sjsu.edu",
+            "createdAt": "2019-09-27T21:38:35.714Z",
+            "updatedAt": "2019-09-27T21:38:35.714Z",
+            "__v": 0
+        },
+        {
+            "establishedDate": "2019-09-27T21:59:37.438Z",
+            "_id": "5d8e86d5ac3936a0e34708af",
+            "name": "Santa Clara University",
+            "location": "Santa Clara",
+            "address": "1 first street, Santa Clara",
+            "description": "Nice college",
+            "domainName": "scu.edu",
+            "createdAt": "2019-09-27T22:01:57.499Z",
+            "updatedAt": "2019-09-27T22:01:57.499Z",
+            "__v": 0
+        }
+    ]
+
 example two -- get one org info given by orgId
 url http://localhost:3001/api/org?orgId=5d8e86d5ac3936a0e34708af
-[
-    {
-        "establishedDate": "2019-09-27T21:59:37.438Z",
-        "_id": "5d8e86d5ac3936a0e34708af",
-        "name": "Santa Clara University",
-        "location": "Santa Clara",
-        "address": "1 first street, Santa Clara",
-        "description": "Nice college",
-        "domainName": "scu.edu",
-        "createdAt": "2019-09-27T22:01:57.499Z",
-        "updatedAt": "2019-09-27T22:01:57.499Z",
-        "__v": 0
-    }
-]
-*/
+
+    [
+        {
+            "establishedDate": "2019-09-27T21:59:37.438Z",
+            "_id": "5d8e86d5ac3936a0e34708af",
+            "name": "Santa Clara University",
+            "location": "Santa Clara",
+            "address": "1 first street, Santa Clara",
+            "description": "Nice college",
+            "domainName": "scu.edu",
+            "createdAt": "2019-09-27T22:01:57.499Z",
+            "updatedAt": "2019-09-27T22:01:57.499Z",
+            "__v": 0
+        }
+    ]
 
 # Users
 
