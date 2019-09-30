@@ -52,12 +52,12 @@ router.post('/login', async (req, res) =>
     if(checkEmail === false || checkPassword === false) 
     {
         console.log("Unsuccessful login")
-        return res.status(401).send("Unsuccessful login")
+        return res.status(401).send(JSON.stringify({message: "Unsuccessful login"}))
     }
     else
     {
         console.log("SUCCESS!")
-        return res.send("Successful login")
+        return res.send(JSON.stringify({message: "Successful login"}))
     }
 })
 
