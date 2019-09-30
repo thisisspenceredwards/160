@@ -121,7 +121,17 @@ Response format: JSON
 * password: String
 * email: String
 
+
 ## Examples
+
+GET: Get information for a given user by username. This will return the orgId and username. Example:
+
+http://localhost:3000/api/user?username=asdf
+
+    {
+        "orgId": 1,
+        "username": "asdf"
+    }
 
 
 # Topics
