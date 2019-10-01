@@ -25,7 +25,7 @@ class App extends Component {
   loadUser = (data) => {
     this.setState({user: {
       id: data.id,
-      name: data.name,
+      name: data.username,
       email: data.email,
     }})
   }

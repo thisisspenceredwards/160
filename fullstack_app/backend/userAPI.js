@@ -42,6 +42,13 @@ router.put('/putUser', [
      }
  })
 
+router.get('/user', (req, res) => {
+    User.find((err, data) => {
+        if (err) return res.json({success: false, error: err});
+        return res.json({success: true, data: data});
+    })
+})
+
 router.post('/login', async (req, res) =>
 {
     let authentication = new Authentication()
@@ -56,144 +63,18 @@ router.post('/login', async (req, res) =>
     }
     else
     {
-        console.log("SUCCESS!")
-        return res.send(JSON.stringify({message: "Successful login"}))
+        const search = {email: email}
+        const user = User.findOne(search)
+        User.findOne(search, (err, user) => {
+            if (err) return res.json({success: false, error: err});
+            return res.json({
+                success: true,
+                email: user.email,
+                name: user.username,
+                id: user._id,
+            });
+        })
     }
 })
 
 module.exports = router
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-router.get('/emailInDB', (req, res) =>
-{
-    console.log("emailInDB")
-    const email = req.query.email
-    console.log(email)
-    User.findOne({"email": email}, function(err, results)
-    {
-        if(err) return res.json(constants.FAIL_JSON)
-        else
-        {
-            try
-            {
-                console.log((results.toObject()))
-                const ob = results.toObject()
-                if(ob.email === email) return res.json(constants.SUCCESS_JSON)
-                else return res.json(constants.FAIL_JSON)
-            }
-            catch
-            {
-                return res.json(constants.FAIL_JSON)
-            }
-        }
-    })
-})
-
-router.get('/userInDB', (req, res) =>
-{
-    console.log("doesUsernameExist")
-    const username = req.query.username
-    console.log("username is: " + username)
-    User.findOne({"username": username}, function(err, results)
-    {
-        if(err) return res.json(constants.FAIL_JSON)
-        else
-        {
-            try
-            {
-                console.log((results.toObject()))
-                const ob = results.toObject()
-                if(ob.username === username) return res.json(constants.SUCCESS_JSON)
-                else return res.json(constants.FAIL_JSON)
-            }
-            catch
-            {
-                return res.json(constants.FAIL_JSON)
-            }
-        }
-    })
-})
-*/
-
-/*
-// this is our update method
-// this method overwrites existing data in our database
-router.post('/updateData', (req, res) => {
-  const { id, update } = req.body;
-  Data.findByIdAndUpdate(id, update, (err) => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true });
-  });
-});
-
-// this is our delete method
-// this method removes existing data in our database
-router.delete('/deleteData', (req, res) => {
-  //console.log("backend")
-  const { id } = req.body;
-  Data.findByIdAndRemove( id, (err) => {
-    if (err)
-    {
-       // console.log("data not here" + id);
-        return res.send(err);
-    }
-    else
-    {
-       // console.log("data success: " + id);
-        return res.json({ success: true });
-    }
-  });
-});
-*/
-
-
-// this is our get method
-// this method fetches all available data in our database
-/*
-router.get('/getData', (req, res) => {
-  Data.find((err, data) => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true, data: data });
-  });
-});
-
-*/
-
-

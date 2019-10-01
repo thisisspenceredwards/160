@@ -6,8 +6,12 @@ const logger = require('morgan');
 const API_PORT = 3001;
 const app = express();
 const userAPI = require('./userAPI.js');
+const postAPI = require('./postAPI.js');
 const topicAPI = require('./topicAPI.js');
 const orgAPI = require('./OrgAPI.js');
+
+const data = require('./data.js')
+const Data = data.Data
 
 mongoose.set('useFindAndModify', false);
 mongoose.Promise = global.Promise
@@ -19,7 +23,7 @@ app.use(logger('dev'));
 
 const router = express.Router();
 router.get('/getData', (req, res) => {
-  Data.find((err, data) => {
+  Data.find({message: "newvalue"}, (err, data) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
@@ -47,5 +51,6 @@ app.use('/api', router);
 app.use('/api', userAPI);
 app.use('/api', topicAPI);
 app.use('/api', orgAPI);
+app.use('/api', postAPI);
 // launch our backend into a port
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
