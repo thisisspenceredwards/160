@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const express = require('express');
+const Session = require('express-session')
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const API_PORT = 3001;
-const app = express();
 const userAPI = require('./userAPI.js');
 const postAPI = require('./postAPI.js');
 const topicAPI = require('./topicAPI.js');
@@ -15,6 +15,23 @@ const Data = data.Data
 
 mongoose.set('useFindAndModify', false);
 mongoose.Promise = global.Promise
+
+const app = express();
+app.set('trust proxy', 1)
+
+
+const secret = "test secret"
+app.use(Session({
+    name: 'session_name',
+    secret: secret,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 6000}
+}))
+
+var cookieParser = require('cookie-parser')
+app.use(cookieParser(secret))
+
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));

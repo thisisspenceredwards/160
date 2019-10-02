@@ -18,9 +18,10 @@ class Signin extends React.Component {
 	}
 
 	onSubmitSignIn = () => {
-		fetch('http://localhost:3001/api/login', {
+		fetch('http://localhost:3000/api/login', {
+            credentials: 'same-origin',
 			method: 'POST',
-			headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({
 				email: this.state.signInEmail,
 				password: this.state.signInPassword

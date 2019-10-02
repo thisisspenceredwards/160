@@ -8,6 +8,10 @@ const Data = models.Data
 const User = models.User
 const Authentication = authenticationFile.Authentication
 
+
+
+
+
 router.put('/putUser', [
     check('username').isLength({ min:3 }).withMessage('Name must have more than 3 characters'),
     check('email').isEmail().normalizeEmail().withMessage('Email is not valid'),
@@ -51,6 +55,7 @@ router.get('/user', (req, res) => {
 
 router.post('/login', async (req, res) =>
 {
+    console.log('Cookies: ', req.cookies)
     let authentication = new Authentication()
     const { email, password } = req.body
     const checkEmail = await authentication.checkEmail(email)
@@ -59,7 +64,9 @@ router.post('/login', async (req, res) =>
     if(checkEmail === false || checkPassword === false) 
     {
         console.log("Unsuccessful login")
-        return res.status(401).send(JSON.stringify({message: "Unsuccessful login"}))
+        return res
+            .status(401)
+            .send(JSON.stringify({message: "Unsuccessful login"}))
     }
     else
     {
@@ -67,11 +74,13 @@ router.post('/login', async (req, res) =>
         const user = User.findOne(search)
         User.findOne(search, (err, user) => {
             if (err) return res.json({success: false, error: err});
-            return res.json({
-                success: true,
-                email: user.email,
-                name: user.username,
-                id: user._id,
+            return res
+                // .cookie("test", 1)
+                .json({
+                    success: true,
+                    email: user.email,
+                    name: user.username,
+                    id: user._id,
             });
         })
     }
