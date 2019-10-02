@@ -53,6 +53,25 @@ router.get('/user', (req, res) => {
     })
 })
 
+
+// try this python code:
+// keep visiting http://localhost:3001/api/session over and over
+router.get('/session', async (req, res) =>
+{
+    if (req.session.visits) {
+        req.session.visits++
+        console.log("visits: "+req.session.visits)
+        res.end("visits: "+req.session.visits)
+        return
+    }
+    else {
+        req.session.visits = 1;
+        console.log("first visit!");
+        res.end('first visit')
+        return
+    }
+})
+
 router.post('/login', async (req, res) =>
 {
     console.log('Cookies: ', req.cookies)
