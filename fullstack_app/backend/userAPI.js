@@ -74,35 +74,56 @@ router.get('/session', async (req, res) =>
 
 router.post('/login', async (req, res) =>
 {
-    console.log('Cookies: ', req.cookies)
-    let authentication = new Authentication()
-    const { email, password } = req.body
-    const checkEmail = await authentication.checkEmail(email)
-    const checkPassword = await authentication.checkPassword(email, password)
-    let message = "";
-    if(checkEmail === false || checkPassword === false) 
-    {
-        console.log("Unsuccessful login")
+    console.log("")
+    var email = null;
+    var password = null;
+    console.log("req.cookies.email: "+req.cookies.email)
+    console.log("req.session.email: "+req.session.email)
+    if(!req.session.email) {
+        let authentication = new Authentication()
+        console.log("req.body.email: "+req.body.email)
+
+        email = req.body.email
+        password = req.body.password
+
+        const checkEmail = await authentication.checkEmail(email)
+        const checkPassword = await authentication.checkPassword(email, password)
+        if (checkEmail === false || checkPassword === false) {
+            console.log("Unsuccessful login")
+            return res.status(401).json(constants.FAIL_JSON)
+        }
+        else {
+            req.session.email = email
+            console.log("after setting req.session.email: "+req.session.email)
+            // req.session.success = true
+            console.log("successful login!")
+        }
+    }
+
+    console.log("req.sessionID: "+req.sessionID)
+    const search = {email: (req.session.email ? req.session.email : email)}
+    User.findOne(search, (err, user) => {
+        if (err) return res.json({success: false, error: err});
+        console.log("user: "+user)
+        console.log("user.email: "+user.email)
+        console.log("user.username: "+user.username)
         return res
-            .status(401)
-            .send(JSON.stringify({message: "Unsuccessful login"}))
-    }
-    else
-    {
-        const search = {email: email}
-        const user = User.findOne(search)
-        User.findOne(search, (err, user) => {
-            if (err) return res.json({success: false, error: err});
-            return res
-                // .cookie("test", 1)
-                .json({
-                    success: true,
-                    email: user.email,
-                    name: user.username,
-                    id: user._id,
-            });
-        })
-    }
+            // .cookie("email", email)
+            .send(JSON.stringify({
+                success: true,
+                email: email,
+                name: user.username,
+                id: user._id,
+            }))
+            // .json({
+            //     success: true,
+            //     email: email,
+            //     name: user.username,
+            //     id: user._id,
+            // })
+            // .end('')
+    })
+
 })
 
 module.exports = router
