@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const Session = require('express-session')
+const fileStore = require('session-file-store')(Session)
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
@@ -19,14 +20,14 @@ mongoose.Promise = global.Promise
 const app = express();
 app.set('trust proxy', 1)
 
-
 const secret = "test secret"
 app.use(Session({
+    store: new fileStore({ path: './session-store'}),
     name: 'session_name',
     secret: secret,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 6000}
+    cookie: { maxAge: 60000 }
 }))
 
 var cookieParser = require('cookie-parser')
