@@ -47,8 +47,6 @@ const PostSchema = new Schema(
     topicId: Schema.Types.ObjectId,
     userID: Schema.Types.ObjectId,
     subject: String,
-    createTime: { type: Date, default: Date.now() },
-    LatestUpdateTime: { type: Date, default: Date.now() },
     parentPostId: Schema.Types.ObjectId,
     body: String,
   },
