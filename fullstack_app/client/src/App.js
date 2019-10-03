@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Navigation from './components/Navigation';
 import Register from './components/Register';
 import Signin from './components/Signin';
-import Dashboard from './components/Dashboard'
+import Dashboard from './components/Dashboard';
+import PostList from './components/PostList';
 import './App.css';
 
 // Initialize state. Can add more properties later
