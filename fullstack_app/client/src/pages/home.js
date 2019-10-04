@@ -11,9 +11,9 @@ class home extends Component {
 //Need to get correct API here
 	componentDidMount() {
 		axios
-			.get('http://localhost:3001/api/org') 
+			.get('/org') 
 			.then((res) => {
-				console.log(res.data[1]);
+				//console.log(res.data);
 				this.setState({
 					posts: res.data
 				});
@@ -23,12 +23,12 @@ class home extends Component {
 
 	render() {
 		let recentPosts = this.state.posts ? (
-			this.state.posts.map((post) => <Post post={post} />)
+			this.state.posts.map((post, i) => <Post key={i} post={post} />)
 		) : (
 		<p>Loading..</p>
 		);
 		return (
-			<Grid container spacing={16}>
+			<Grid container spacing={10}>
 				<Grid item sm={8} xs={12}>
 					{recentPosts}
 				</Grid>	

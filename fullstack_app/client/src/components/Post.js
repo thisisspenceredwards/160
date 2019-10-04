@@ -7,10 +7,16 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 
 const styles = {
-	card : {
-		display: 'flex'
-	}
-}
+  card: {
+    position: 'relative',
+    display: 'flex',
+    marginBottom: 20
+  },
+  content: {
+    padding: 25,
+    objectFit: 'cover'
+  }
+};
 
 class Post extends Component {
 	render() {
@@ -18,8 +24,8 @@ class Post extends Component {
 			post : { body, createdAt, userHandle, postID, likeCount, commentCount } } = this.props;
 
 		return (
-			<Card>
-				<CardContent>
+			<Card className={classes.card}>
+				<CardContent className={classes.content}>
 					<Typography variant="h5">{userHandle}</Typography>
 					<Typography variant="body2" color="textSecondary">{createdAt}</Typography>
 					<Typography variant="body1">{body}</Typography>					
