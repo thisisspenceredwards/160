@@ -176,3 +176,25 @@ Response format: JSON
 
 
 ## Examples
+
+```python
+import requests
+sess = requests.session()
+resp = sess.put(
+    'http://localhost:3000/api/post',
+    {
+        'topicId': None,
+        'subject': 'post subject',
+        'parentPostId': None,
+        'body': 'post body',
+    }
+)
+
+json.loads(resp.text)
+>> {'_id': '5d97796d4af81514221417c1',
+>>  'subject': 'post subject',
+>>  'body': 'post body',
+>>  'createdAt': '2019-10-04T16:55:09.362Z',
+>>  'updatedAt': '2019-10-04T16:55:09.362Z',
+>>  '__v': 0}
+```
