@@ -11,7 +11,7 @@ class home extends Component {
 //Need to get correct API here
 	componentDidMount() {
 		axios
-			.get('/org') 
+			.get('/post') 
 			.then((res) => {
 				//console.log(res.data);
 				this.setState({
