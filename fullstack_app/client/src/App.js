@@ -1,60 +1,29 @@
 import React, { Component } from 'react';
-import Navigation from './components/Navigation';
-import Register from './components/Register';
-import Signin from './components/Signin';
-import Dashboard from './components/Dashboard';
-import PostList from './components/PostList';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 
-// Initialize state. Can add more properties later
-const initialState = {
-  route: 'signin',
-  isSignedIn: false,
-  user: {
-    id: '',
-    name: '',
-    email: '',
-  }
-}
+// Components
+import Navbar from './components/Navbar';
+
+// Pages
+import home from './pages/home';
+import login from './pages/login';
+import signup from './pages/signup';
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = initialState;
-  }
-
-  loadUser = (data) => {
-    this.setState({user: {
-      id: data.id,
-      name: data.name,
-      email: data.email,
-    }})
-  }
-
-  onRouteChange = (route) => {
-    if (route === 'signout') {
-      this.setState(initialState)
-    } else if (route === 'home') {
-      this.setState({isSignedIn: true})
-    }
-    this.setState({route: route});
-  }
-
   render() {
-    const { isSignedIn, route } = this.state;
     return (
       <div className="App">
-        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
-        { route === 'home'
-          ? <div>
-            <Dashboard name={this.state.user.name} />
+        <Router>
+          <Navbar />
+          <div className="container">
+            <Switch>
+              <Route exact path="/" component={home} />
+              <Route exact path="/login" component={login} />
+              <Route exact path="/signup" component={signup} />
+            </Switch>
           </div>
-          : (
-            (route === 'signin' || route === 'signout')
-            ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
-            : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
-          )
-        }
+        </Router>
       </div>
     );
   }
