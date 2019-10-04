@@ -177,6 +177,7 @@ Response format: JSON
 
 ## Examples
 
+PUT:
 ```python
 import requests
 sess = requests.session()
@@ -197,4 +198,18 @@ json.loads(resp.text)
 >>  'createdAt': '2019-10-04T16:55:09.362Z',
 >>  'updatedAt': '2019-10-04T16:55:09.362Z',
 >>  '__v': 0}
+```
+
+GET:
+```python
+resp = sess.get(
+    'http://localhost:3001/api/post?body=body&createdAt=2019-10-04T16:46:36.197Z',
+)
+json.loads(resp.text)
+>> [{'_id': '5d97776c79d5620f95381526',
+>>   'subject': 'post subject',
+>>   'body': 'post body',
+>>   'createdAt': '2019-10-04T16:46:36.197Z',
+>>   'updatedAt': '2019-10-04T16:46:36.197Z',
+>>   '__v': 0}]
 ```
