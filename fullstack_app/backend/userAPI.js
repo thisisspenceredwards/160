@@ -77,7 +77,6 @@ router.post('/login', async (req, res) =>
     console.log("")
     var email = null;
     var password = null;
-    console.log("req.cookies.email: "+req.cookies.email)
     console.log("req.session.email: "+req.session.email)
     if(!req.session.email) {
         let authentication = new Authentication()
@@ -108,7 +107,6 @@ router.post('/login', async (req, res) =>
         console.log("user.email: "+user.email)
         console.log("user.username: "+user.username)
         return res
-            // .cookie("email", email)
             .send(JSON.stringify({
                 success: true,
                 email: email,

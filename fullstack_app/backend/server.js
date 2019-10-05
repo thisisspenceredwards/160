@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const Session = require('express-session')
-const fileStore = require('session-file-store')(Session)
+//const fileStore = require('session-file-store')(Session)
+const MongoStore = require('connect-mongo')(Session)
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
@@ -21,18 +22,6 @@ const app = express();
 app.set('trust proxy', 1)
 
 const secret = "test secret"
-app.use(Session({
-    store: new fileStore({ path: './session-store'}),
-    name: 'session_name',
-    secret: secret,
-    resave: false,
-    saveUninitialized: false,
-    cookie: { maxAge: 60000 }
-}))
-
-var cookieParser = require('cookie-parser')
-app.use(cookieParser(secret))
-
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -49,7 +38,6 @@ router.get('/getData', (req, res) => {
 // this is our MongoDB database
 //
 const dbRoute = 'mongodb+srv://admin:Spooky12@cluster0-j7htk.mongodb.net/test?retryWrites=true&w=majority'
-
 // connects our back end code with the database
 
 mongoose.connect(dbRoute, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
@@ -60,6 +48,15 @@ db.once('open', () => console.log('connected to the database'));
 
 // checks if connection with the database is successful
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+app.use(Session({
+    secret: secret,
+    saveUninitialized: false,
+    resave: false,
+    store: new MongoStore({ mongooseConnection: mongoose.connection}),
+    ttl: 14* 24 * 60 * 60
+}))
+
 
 // (optional) only made for logging and
 // bodyParser, parses the request body to be a readable json format
