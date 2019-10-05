@@ -78,3 +78,4 @@ class Authentication
 }
 
 module.exports.Authentication = Authentication
+
