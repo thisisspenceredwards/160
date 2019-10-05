@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import themeFile from './util/theme';
 
 // Components
 import Navbar from './components/Navbar';
@@ -14,22 +15,7 @@ import signup from './pages/signup';
 
 //Customize color with this tool
 //https://material-ui.com/customization/color/#color-tool
-const theme = createMuiTheme ({
-  palette: {
-    primary: {
-      light: '#33c9dc',
-      main: '#00bcd4',
-      dark: '#008394',
-      contrastText: '#fff'
-    },
-    secondary: {
-      light: '#ff6333',
-      main: '#ff3d00',
-      dark: '#b22a00',
-      contrastText: '#fff'
-    }
-  }
-});
+const theme = createMuiTheme(themeFile);
 
 class App extends Component {
   render() {

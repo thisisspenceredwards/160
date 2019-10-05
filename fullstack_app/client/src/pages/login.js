@@ -8,20 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-const styles = {
-	form: {
-		textAlign: 'center'
-	},
-	pageTitle: {
-		margin: '10px auto 10px auto'
-	},
- 	textField: {
-    margin: '10px auto 10px auto'
-  },
-  button: {
-  	marginTop: 20
-  }
-};
+const styles = (theme) => ({
+	...theme.spreadThis
+})
 
 class login extends Component {
 	constructor() {
@@ -45,7 +34,7 @@ class login extends Component {
 		}
 		axios.post('/login', userData)
 			.then(res => {
-				console.log(res.data);
+				// localStorage.setItem('???', '???'); NEED SESSION TOKEN HERE
 				this.setState({
 					loading: false
 				});
@@ -108,7 +97,7 @@ class login extends Component {
 						</Button>
 						<br />
 						<small>
-							Don't have an account? Sign up here <Link to="/signup">here</Link>
+							Don't have an account? Sign up <Link to="/signup">here</Link>
 						</small>
 					</form>
 				</Grid>

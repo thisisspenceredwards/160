@@ -3,30 +3,21 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 
-const styles = {
-  card: {
-    position: 'relative',
-    display: 'flex',
-    marginBottom: 20
-  },
-  content: {
-    padding: 25,
-    objectFit: 'cover'
-  }
-};
+const styles = (theme) => ({
+  ...theme.spreadThis
+});
 
 class Post extends Component {
 	render() {
 		const { classes, 
-			post : { body, createdAt, userHandle, postID, likeCount, commentCount } } = this.props;
+			post : { body, createdAt, topicId, likeCount, commentCount } } = this.props;
 
 		return (
 			<Card className={classes.card}>
 				<CardContent className={classes.content}>
-					<Typography variant="h5">{userHandle}</Typography>
+					<Typography variant="h5">{topicId}</Typography>
 					<Typography variant="body2" color="textSecondary">{createdAt}</Typography>
 					<Typography variant="body1">{body}</Typography>					
 				</CardContent>

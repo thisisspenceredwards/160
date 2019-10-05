@@ -8,12 +8,10 @@ class home extends Component {
 		posts: null,
 	};
 
-//Need to get correct API here
 	componentDidMount() {
 		axios
 			.get('/post') 
 			.then((res) => {
-				//console.log(res.data);
 				this.setState({
 					posts: res.data
 				});
