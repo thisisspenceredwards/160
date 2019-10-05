@@ -77,14 +77,12 @@ router.post('/login', async (req, res) =>
     console.log("")
     var email = null;
     var password = null;
+    let authentication = new Authentication()
     console.log("req.session.email: "+req.session.email)
     if(!req.session.email) {
-        let authentication = new Authentication()
         console.log("req.body.email: "+req.body.email)
-
         email = req.body.email
         password = req.body.password
-
         const checkEmail = await authentication.checkEmail(email)
         const checkPassword = await authentication.checkPassword(email, password)
         if (checkEmail === false || checkPassword === false) {
@@ -94,18 +92,13 @@ router.post('/login', async (req, res) =>
         else {
             req.session.email = email
             console.log("after setting req.session.email: "+req.session.email)
-            // req.session.success = true
             console.log("successful login!")
         }
     }
 
     console.log("req.sessionID: "+req.sessionID)
     const search = {email: (req.session.email ? req.session.email : email)}
-    User.findOne(search, (err, user) => {
-        if (err) return res.json({success: false, error: err});
-        console.log("user: "+user)
-        console.log("user.email: "+user.email)
-        console.log("user.username: "+user.username)
+    const user = await authentication.getUser(search)
         return res
             .send(JSON.stringify({
                 success: true,
@@ -113,15 +106,9 @@ router.post('/login', async (req, res) =>
                 name: user.username,
                 id: user._id,
             }))
-            // .json({
-            //     success: true,
-            //     email: email,
-            //     name: user.username,
-            //     id: user._id,
-            // })
-            // .end('')
-    })
-
 })
+
+
+
 
 module.exports = router

@@ -23,7 +23,19 @@ class Authentication
         console.log(result)
         return result
     }
-
+    getUser(search)
+    {
+        let result = User.findOne(search, (err, user) => 
+        {
+        if (err) return res.json({success: false, error: err});
+        console.log("user: "+user)
+        console.log("user.email: "+user.email)
+        console.log("user.username: "+user.username)
+        console.log("user.string: "+ user.string)
+        return user
+        })
+        return result
+    }
     checkUsername(username)
     {
         let result = ""
