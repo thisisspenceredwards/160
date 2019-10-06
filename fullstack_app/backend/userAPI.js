@@ -38,6 +38,7 @@ router.put('/putUser', [
         user.username = username
         user.password = authentication.hashPassword(password)
         user.email = email
+        user.token = ''
         user.save((err) =>
          {
             if (err) return res.json(constants.FAIL_JSON)
@@ -72,43 +73,112 @@ router.get('/session', async (req, res) =>
     }
 })
 
+router.post('/logout', async (req, res) =>
+{
+    if(req.session == null)
+    {
+          return res.send(
+           JSON.stringify(
+           {
+               success: false,
+               email: email,
+               name: user.username,
+               id: user._id
+            }))
+    }
+    var email = null
+    const authentication = new Authentication()
+    const search = {email: (req.session.email ? req.sesssion: email)}
+    if(search === null) 
+    {
+        return res.send(
+               JSON.stringify(
+               {
+                   success: false,
+                   email: email,
+                   name: user.username,
+                   id: user._id
+               }))
+    }
+    else
+    {
+        const user = await authentication.getUser(search)
+        delete req.SessionID
+        return res.send(
+               JSON.stringify(
+               {
+                   success: false,
+                   email: email,
+                   name: user.username,
+                   id: user._id
+               }))
+    }
+
+})
+
 router.post('/login', async (req, res) =>
 {
-    console.log("")
+    console.log("req.session.success: " + req.session.success)
     var email = null;
     var password = null;
     let authentication = new Authentication()
-    console.log("req.session.email: "+req.session.email)
-    if(!req.session.email) {
-        console.log("req.body.email: "+req.body.email)
+    let user = await authentication.getUser({email: req.session.email})
+    console.log("req.session.token: " + req.session.token)
+    if(!req.session.email || !req.session.token || req.session.success !== true)
+    {
         email = req.body.email
         password = req.body.password
         const checkEmail = await authentication.checkEmail(email)
         const checkPassword = await authentication.checkPassword(email, password)
-        if (checkEmail === false || checkPassword === false) {
+        if (checkEmail === false || checkPassword === false)
+        {
             console.log("Unsuccessful login")
             return res.status(401).json(constants.FAIL_JSON)
         }
-        else {
+        else 
+        {
+            let token =  Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+            console.log("token: " + token)
             req.session.email = email
-            console.log("after setting req.session.email: "+req.session.email)
-            console.log("successful login!")
+            req.session.token = token
+            req.session.success = true
+            user.token = token
+            user.save()
+            return res.send(JSON.stringify({
+                    success: true,
+                    email: email,
+                    name: user.username,
+                    id: user._id
+                }))
+            }
         }
-    }
-
-    console.log("req.sessionID: "+req.sessionID)
-    const search = {email: (req.session.email ? req.session.email : email)}
-    const user = await authentication.getUser(search)
-        return res
-            .send(JSON.stringify({
+    if(user.token === req.session.token)
+    {
+        console.log("HERE")
+        return res.send(JSON.stringify({
                 success: true,
                 email: email,
                 name: user.username,
-                id: user._id,
+                id: user._id
             }))
+    }
+    else 
+    {
+        console.log("uh oh!!!")
+        await authentication.updateToken(email, '')
+        req.session.success = false
+        req.session.token = ''
+        return res.send(JSON.stringify({
+            success: false,
+            email: email,
+            name: user.username,
+            id: user._id
+        }))
+    }
 })
 
 
 
 
 module.exports = router
+ 

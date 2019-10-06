@@ -29,6 +29,7 @@ const UserSchema = new Schema(
     username: String,
     password: String,
     email: String,
+    token: String
   },
   { timestamps: true },
 

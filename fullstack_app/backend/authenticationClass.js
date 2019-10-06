@@ -19,22 +19,36 @@ class Authentication
                      return false
              }).catch(function(err){ result = false })
         }
-        catch(err){ return false}
+        catch(err){ return undefined}
         console.log(result)
         return result
     }
+    /*updateToken(search, token)
+    {
+        let user = this.getUser(search)
+        user.token = token
+        user.save()
+        /*let result =  User.findOne(search, (err, user) =>
+        {
+            if(err) return false
+            user.token = token
+            user.save()
+            return true
+        })
+        return true
+    }*/
     getUser(search)
     {
         let result = User.findOne(search, (err, user) => 
         {
-        if (err) return res.json({success: false, error: err});
-        console.log("user: "+user)
-        console.log("user.email: "+user.email)
-        console.log("user.username: "+user.username)
-        console.log("user.string: "+ user.string)
-        return user
+            if (err) return {success: false, error: err}
+            console.log("user: "+user)
+            console.log("user.email: "+user.email)
+            console.log("user.username: "+user.username)
+            console.log("user.string: "+ user.string)
+            return user
         })
-        return result
+            return result
     }
     checkUsername(username)
     {
