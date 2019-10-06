@@ -42,10 +42,10 @@ class Authentication
         let result = User.findOne(search, (err, user) => 
         {
             if (err) return {success: false, error: err}
-            console.log("user: "+user)
-            console.log("user.email: "+user.email)
-            console.log("user.username: "+user.username)
-            console.log("user.string: "+ user.string)
+            //console.log("user: "+user)
+            //console.log("user.email: "+user.email)
+            //console.log("user.username: "+user.username)
+            //console.log("user.string: "+ user.string)
             return user
         })
             return result

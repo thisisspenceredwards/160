@@ -73,58 +73,38 @@ router.get('/session', async (req, res) =>
     }
 })
 
+
 router.post('/logout', async (req, res) =>
 {
-    if(req.session == null)
-    {
-          return res.send(
-           JSON.stringify(
-           {
-               success: false,
-               email: email,
-               name: user.username,
-               id: user._id
-            }))
-    }
-    var email = null
     const authentication = new Authentication()
-    const search = {email: (req.session.email ? req.sesssion: email)}
-    if(search === null) 
+    if(req.session.email)
     {
-        return res.send(
-               JSON.stringify(
-               {
-                   success: false,
-                   email: email,
-                   name: user.username,
-                   id: user._id
-               }))
+            const user = await authentication.getUser({email: req.session.email})
+            req.session.email = ''
+            req.session.token = ''
+            req.session.success = ''
+            req.session.destroy(function(err){ return res.status(404).json({error: "user not found"})})
+            user.token = ''
+            user.save()
+            console.log("req.session.email: " + req.session.email)
+            console.log("req.session.token: " + req.session.token)
+            console.log("req.session.success: " + req.session.success)
+            console.log("user.token: " + user.token)
+            return res.json(constants.SUCCESS_JSON)
     }
-    else
-    {
-        const user = await authentication.getUser(search)
-        delete req.SessionID
-        return res.send(
-               JSON.stringify(
-               {
-                   success: false,
-                   email: email,
-                   name: user.username,
-                   id: user._id
-               }))
-    }
+    else return res.json(constants.FAILURE_JSON)
 
 })
 
+
+
 router.post('/login', async (req, res) =>
 {
-    console.log("req.session.success: " + req.session.success)
-    var email = null;
-    var password = null;
+    console.log("email body: " + req.body.email)
+    var email = undefined;
+    var password = undefined;
     let authentication = new Authentication()
-    let user = await authentication.getUser({email: req.session.email})
-    console.log("req.session.token: " + req.session.token)
-    if(!req.session.email || !req.session.token || req.session.success !== true)
+    if(!req.session.email || req.session.success !== true)
     {
         email = req.body.email
         password = req.body.password
@@ -142,6 +122,7 @@ router.post('/login', async (req, res) =>
             req.session.email = email
             req.session.token = token
             req.session.success = true
+            let user = await authentication.getUser({email: req.session.email})
             user.token = token
             user.save()
             return res.send(JSON.stringify({
@@ -152,28 +133,32 @@ router.post('/login', async (req, res) =>
                 }))
             }
         }
-    if(user.token === req.session.token)
+    else
     {
-        console.log("HERE")
-        return res.send(JSON.stringify({
+        let user = await authentication.getUser({email: req.session.email})
+        if(user.token === req.session.token)
+        {
+            return res.send(JSON.stringify
+            ({
                 success: true,
                 email: email,
                 name: user.username,
                 id: user._id
             }))
-    }
-    else 
-    {
-        console.log("uh oh!!!")
-        await authentication.updateToken(email, '')
-        req.session.success = false
-        req.session.token = ''
-        return res.send(JSON.stringify({
-            success: false,
-            email: email,
-            name: user.username,
-            id: user._id
-        }))
+        }
+        else 
+        {
+            user.token = ''
+            user.save()
+            req.session.destroy(function(err){})
+            return res.send(JSON.stringify
+            ({
+                success: false,
+                email: email,
+                name: user.username,
+                id: user._id
+            }))
+        }
     }
 })
 
