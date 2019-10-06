@@ -79,6 +79,9 @@ router.post('/logout', async (req, res) =>
     const authentication = new Authentication()
     if(req.session.email)
     {
+        const checkEmail = await authentication.checkEmail(req.session.email)
+        if (checkEmail === true)
+        {
             const user = await authentication.getUser({email: req.session.email})
             req.session.email = ''
             req.session.token = ''
@@ -91,6 +94,7 @@ router.post('/logout', async (req, res) =>
             console.log("req.session.success: " + req.session.success)
             console.log("user.token: " + user.token)
             return res.json(constants.SUCCESS_JSON)
+        }
     }
     else return res.json(constants.FAILURE_JSON)
 
