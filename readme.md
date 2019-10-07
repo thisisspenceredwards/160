@@ -18,7 +18,10 @@ will create a user
 
 requests.post('http://localhost:3001/api/login', {'username': 'jeffy', 'password': '12345'}).text)
 
-will allow a user to 'login' currently will only check and verify credentials and return a success or failure message 
+will allow a user to 'login' currently will only check and verify credentials and returns a json message with username, id, and email
+
+requests.post('http://localhost:3001/api/logout', checks cookie and destroys cookie if there is one, returns json success or failure message
+
 
 ### Topic API
 1) /api/topic
