@@ -117,7 +117,14 @@ router.post('/login', async (req, res) =>
         if (checkEmail === false || checkPassword === false)
         {
             console.log("Unsuccessful login")
-            return res.status(401).json(constants.FAIL_JSON)
+            return return res.send(JSON.stringify
+            ({
+                success: false,
+                email: email,
+                name: "invalid",
+                id: "invalid"
+            })) 
+
         }
         else 
         {
@@ -161,7 +168,7 @@ router.post('/login', async (req, res) =>
                 email: email,
                 name: user.username,
                 id: user._id
-            }))
+            })) 
         }
     }
 })
