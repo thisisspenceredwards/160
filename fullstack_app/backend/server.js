@@ -69,3 +69,5 @@ app.use('/api', orgAPI);
 app.use('/api', postAPI);
 // launch our backend into a port
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
+
+module.exports = app

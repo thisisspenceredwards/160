@@ -13,7 +13,7 @@ const Organization = models.Organization
 // @input @Param address:  address
 // @input @Param description:  description
 // @input @Param domainName:  domain name, eg. "sjsu.edu"
-// @Output: "success: true/false"
+// @Output: an Organization in JSON or "fail"
 // example:
 // url: http://localhost:3001/api/org/
 //{
@@ -23,6 +23,17 @@ const Organization = models.Organization
 //    "description": "Nice college",
 //    "domainName": "sjsu.edu"
 //}
+// output:
+// { establishedDate: '2019-10-11T06:03:33.115Z',
+ // _id: '5da01b36243462653dcba3c0',
+  // name: 'San Jose State University',
+ // location: 'San Jose',
+ // address: '1 frist street, San Jose',
+ //  description: 'Nice college',
+ // domainName: 'sjsu.edu',
+ // createdAt: '2019-10-11T06:03:34.971Z',
+ // updatedAt: '2019-10-11T06:03:34.971Z',
+ // __v: 0 }
 
 router.post('/org', [
     check('name').isLength({ min:1 }).withMessage('The name has to be non-empty.'),
@@ -61,8 +72,12 @@ router.post('/org', [
                 // save it
                 organization.save((err) =>
                 {
-                    if (err) return res.json(constants.FAIL_JSON)
-                    else return res.json(constants.SUCCESS_JSON)
+                    if (err) {
+                        console.log(err)
+                        return res.json(constants.FAIL_JSON)
+                    } else {
+                        return res.status(200).json(organization)
+                    }
                 })
             }
         }
@@ -135,4 +150,28 @@ url http://localhost:3001/api/org?orgId=5d8e86d5ac3936a0e34708af
         }
     });
 });
+
+router.delete('/org/:org_id', async(req, res) =>
+{
+    //console.log("---------step 1----------");
+    //console.log(req.params.org_id);
+    if (req.params.org_id != null) {
+        //console.log("step 2");
+        const query = {_id: req.params.org_id}
+
+        Organization.deleteOne(query, (err) => {
+            if (err) {
+                //console.log("step 3");
+                return res.send(err);
+            } else {
+                //console.log("step 4");
+                return res.status(200).json(query);
+            }
+        });
+    } else {
+        //console.log("step 5");
+        return res.send("org_id should not be empty.");
+    }
+}
+);
 module.exports = router
