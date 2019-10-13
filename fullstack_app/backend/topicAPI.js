@@ -42,8 +42,12 @@ router.post('/topic', [
         //console.log(topic.topicName)
         topic.save((err) =>
          {
-            if (err) return res.json(constants.FAIL_JSON)
-            else return res.json(constants.SUCCESS_JSON)
+            if (err) {
+                console.log(err);
+                return res.json(constants.FAIL_JSON);
+            } else { 
+                return res.status(200).json(topic);
+            }
          })
      }
  })
@@ -85,6 +89,29 @@ router.get('/topic', [], async(req, res) =>
             });
     } else {
         return res.json(constants.FAIL_JSON)
+    }
+});
+
+router.delete('/topic/:topic_id', async(req, res) =>
+{
+    //console.log("---------step 1----------");
+    console.log(req.params.topic_id);
+    if (req.params.topic_id != null) {
+        //console.log("step 2");
+        const query = {_id: req.params.topic_id}
+
+        Topic.deleteOne(query, (err) => {
+            if (err) {
+                //console.log("step 3");
+                return res.send(err);
+            } else {
+                //console.log("step 4");
+                return res.status(200).json(query);
+            }
+        });
+    } else {
+        //console.log("step 5");
+        return res.send("topic_id should not be empty.");
     }
 });
 module.exports = router

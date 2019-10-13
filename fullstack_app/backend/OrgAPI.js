@@ -172,6 +172,5 @@ router.delete('/org/:org_id', async(req, res) =>
         //console.log("step 5");
         return res.send("org_id should not be empty.");
     }
-}
-);
+});
 module.exports = router
