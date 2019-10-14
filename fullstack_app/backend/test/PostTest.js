@@ -14,7 +14,7 @@ describe('[Post]', function(){
         .expect(200)
         .end(function(err, resp) {
             expect(resp.body).to.an('array');
-            console.log(resp.body)
+            //console.log(resp.body)
             done();
         })
     });
@@ -33,10 +33,10 @@ describe('[Post]', function(){
         .expect('Content-Type./json/')
         .expect(200)
         .end(function(err, resp) {
-            console.log(resp.body)
+            //console.log(resp.body)
             expect(resp.body).to.be.an('object');
             var post = resp.body;
-            console.log(post._id);
+            //console.log(post._id);
             createdPost_id = post._id;  
             done();
         });
@@ -44,7 +44,7 @@ describe('[Post]', function(){
 
     //var createdPost_id = "5da417e6b9af3246fa0410ee";
     it('should delete the new post', function(done) {
-        console.log("createdPost_id="+createdPost_id);
+        //console.log("createdPost_id="+createdPost_id);
         request(app)
         .delete('/api/post/' + createdPost_id)
             .end(function(err,resp) {

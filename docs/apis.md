@@ -14,7 +14,7 @@ Response format: JSON
 * POST Create a new organization [Frank]
 * POST Edit an existing organization
 * GET Search for one or more organizations [Frank]
-* DELETE Retire an organization
+* DELETE Retire an organization [Frank]
 
 ## Parameters
 * name: String
@@ -102,6 +102,21 @@ url http://localhost:3001/api/org?orgId=5d8e86d5ac3936a0e34708af
         }
     ]
 
+* DELETE Search for one or more organizations
+
+    DELETE method
+    delete an org by org id
+    @input @Param OrgId : the org ID
+    Output: the deleted org ID
+
+example -- delete an org
+url: http://localhost:3001/api/org/5d8e8acc09c0bda34a6227c1
+output JSON:
+
+        {
+            "_id": "5d8e8acc09c0bda34a6227c1"
+        }
+    
 # Users
 
 Endpoint: api/user

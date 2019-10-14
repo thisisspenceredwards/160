@@ -92,6 +92,16 @@ router.get('/topic', [], async(req, res) =>
     }
 });
 
+
+// DELETE method
+// delete a topic 
+// @input @Param topicId : the topic ID
+// @Output: the deleted topic ID
+// example:
+// url: http://localhost:3001/api/topic/5d8e8acc09c0bda34a6227c1
+//{
+//    "_id": "5d8e8acc09c0bda34a6227c1"
+//}
 router.delete('/topic/:topic_id', async(req, res) =>
 {
     //console.log("---------step 1----------");
