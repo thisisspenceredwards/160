@@ -11,10 +11,10 @@ Endpoint: api/organization
 Response format: JSON
 
 ## Methods
-* POST Create a new organization [Frank]
+* POST Create a new organization
 * POST Edit an existing organization
-* GET Search for one or more organizations [Frank]
-* DELETE Retire an organization [Frank]
+* GET Search for one or more organizations
+* DELETE Retire an organization
 
 ## Parameters
 * name: String
@@ -102,12 +102,11 @@ url http://localhost:3001/api/org?orgId=5d8e86d5ac3936a0e34708af
         }
     ]
 
-* DELETE Search for one or more organizations
-
+* DELETE
     DELETE method
     delete an org by org id
     @input @Param OrgId : the org ID
-    Output: the deleted org ID
+    @Output: the deleted org ID
 
 example -- delete an org
 url: http://localhost:3001/api/org/5d8e8acc09c0bda34a6227c1
@@ -167,7 +166,59 @@ Response format: JSON
 
 
 ## Examples
+POST:
+    POST method
+    create a topic
+    @input @Param : the org ID that the topic belongs
+    @input @Param topicName:  the topic name
+    @Output: the topic info
 
+Example -- list the topic list
+url: http://localhost:3001/api/topic/
+output JSON:
+
+            {
+                "_id": "5d8e8acc09c0bda34a6227c1",
+                "topicOrgId": "5d893a60be54da38e9018308",
+                "topicName": "Environment"
+            }
+    
+GET:
+    GET method
+    get the topic list from the org
+    @input @Param : the org ID that the topic belongs
+    @Output: the list of topic info
+
+Example -- list the topic list
+url: http://localhost:3001/api/topic?topicOrgId=5d893a60be54da38e9018308
+output JSON:
+
+        [
+            {
+                "_id": "5d8e8acc09c0bda34a6227c1",
+                "topicOrgId": "5d893a60be54da38e9018308",
+                "topicName": "Environment"
+            },
+            {
+                "_id": "5d8e8acc09c0bda34a6227c1",
+                "topicOrgId": "5d893a60be54da38e9018308",
+                "topicName": "Environment"
+            }
+        ]
+    
+DELETE:
+    DELETE method
+    delete a topic by a topic id
+    @input @Param : the topic ID
+    @Output: the deleted topic ID
+
+Example -- delete an topic
+url: http://localhost:3001/api/topic/5d8e8acc09c0bda34a6227c1
+output JSON:
+
+        {
+            "_id": "5d8e8acc09c0bda34a6227c1"
+        }
 
 
 # Posts
@@ -228,3 +279,17 @@ json.loads(resp.text)
 >>   'updatedAt': '2019-10-04T16:46:36.197Z',
 >>   '__v': 0}]
 ```
+
+DELETE:
+    DELETE method
+    delete an post by post id
+    @input @Param : the post ID
+    @Output: the deleted post ID
+
+Example -- delete an post
+url: http://localhost:3001/api/post/5d8e8acc09c0bda34a6227c1
+output JSON:
+
+        {
+            "_id": "5d8e8acc09c0bda34a6227c1"
+        }
