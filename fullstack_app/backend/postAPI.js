@@ -64,7 +64,28 @@ router.get('/post', (req, res) =>
             res.json(posts)
         }
     )
-
 })
 
+router.delete('/post/:post_id', async(req, res) =>
+{
+    //console.log("---------step 1----------");
+    //console.log(req.params.post_id);
+    if (req.params.post_id != null) {
+        //console.log("step 2");
+        const query = {_id: req.params.post_id}
+
+        Post.deleteOne(query, (err) => {
+            if (err) {
+                //console.log("step 3");
+                return res.send(err);
+            } else {
+                //console.log("step 4");
+                return res.status(200).json(query);
+            }
+        });
+    } else {
+        //console.log("step 5");
+        return res.send("post_id should not be empty.");
+    }
+});
 module.exports = router
