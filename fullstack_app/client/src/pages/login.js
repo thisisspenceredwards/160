@@ -33,8 +33,9 @@ class login extends Component {
 			password: this.state.password
 		}
 		axios.post('/login', userData)
-			.then(res => {
-				// localStorage.setItem('???', '???'); NEED SESSION TOKEN HERE
+			.then((res) => {
+				// console.log(res.data); THIS OBJECT DOESNT HAVE TOKEN PROPERTY
+				localStorage.setItem('sessionToken', `Bearer ${res.data.token}`);
 				this.setState({
 					loading: false
 				});

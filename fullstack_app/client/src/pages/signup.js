@@ -37,8 +37,8 @@ class signup extends Component {
 			username: this.state.username,
 		}
 		axios.post('/putUser', newUserData)
-			.then(res => {
-				// localStorage.setItem('???', '???'); NEED SESSION TOKEN HERE
+			.then((res) => {
+				localStorage.setItem('sessionToken', `Bearer ${res.data.token}`);
 				this.setState({
 					loading: false
 				});
