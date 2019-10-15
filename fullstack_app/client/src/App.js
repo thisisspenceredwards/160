@@ -23,18 +23,18 @@ import signup from './pages/signup';
 //https://material-ui.com/customization/color/#color-tool
 const theme = createMuiTheme(themeFile);
 
-let authenticated;
-const token = localStorage.sessionToken;
-if(token) {
-  const decodedToken = jwtDecode(token);
-  //Check if token is expired
-  if(decodedToken.exp * 1000 < Date.now()) {
-    window.location.href='/login'
-    authenticated = false;
-  } else {
-    authenticated = true;
-  }
-}
+// let authenticated;
+// const token = localStorage.sessionToken;
+// if(token) {
+//   const decodedToken = jwtDecode(token);
+//   //Check if token is expired
+//   if(decodedToken.exp * 1000 < Date.now()) {
+//     window.location.href='/login'
+//     authenticated = false;
+//   } else {
+//     authenticated = true;
+//   }
+// }
 
 class App extends Component {
   render() {
@@ -46,8 +46,8 @@ class App extends Component {
             <div className="container">
               <Switch>
                 <Route exact path="/" component={home} />
-                <AuthRoute exact path="/login" component={login} authenticated={authenticated} />
-                <AuthRoute exact path="/signup" component={signup} authenticated={authenticated} />
+                <Route exact path="/login" component={login} />
+                <Route exact path="/signup" component={signup} />
               </Switch>
             </div>
           </Router>
