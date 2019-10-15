@@ -73,6 +73,7 @@ class login extends Component {
 							id="password" 
 							name="password"
 							label="Password" 
+							type="Password" 
 							className={classes.textField}
 							helperText={errors.password}
 							error={errors.password ? true : false}
