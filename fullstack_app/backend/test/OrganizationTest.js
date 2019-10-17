@@ -25,16 +25,15 @@ describe('[Organization]', function(){
             location: "Santa Clara",
             address: "1 first street, Santa Clara",
             description: "Nice college",
-            domainName: "scu-fake.edu"
+            domainName: "scu-fake2.edu"
         })
         .set('Accept', 'application/json')
         .expect('Content-Type./json/')
         .expect(200)
         .end(function(err, resp) {
-            //console.log(resp.body)
             expect(resp.body).to.be.an('object');
             var org = resp.body;
-            console.log(org._id);
+            expect(org.name).to.be.contain('Santa Clara University4');
             createdOrg_id = org._id;  
             done();
         })
