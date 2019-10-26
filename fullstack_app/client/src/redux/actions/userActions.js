@@ -1,16 +1,25 @@
 import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, LOADING_USER } from '../types';
 import axios from 'axios';
 
+const instance = axios.create({
+        timeout: 1000,
+        withCredentials:true,
+        headers: { crossDomain: true, 'Content-Type': 'application/json'}
+})
+
+
 export const loginUser = (userData, history) => (dispatch) => {
   dispatch({ type: LOADING_UI });
-  axios
+  let res =  instance
     .post('/login', userData)
     .then((res) => {
+            console.log("HERE");
       setAuthorizationHeader(res.data.token);
       dispatch(getUserData());
       dispatch({ type: CLEAR_ERRORS });
       history.push('/');
-    })
+   
+ })
     .catch((err) => {
       dispatch({
         type: SET_ERRORS,
@@ -19,9 +28,9 @@ export const loginUser = (userData, history) => (dispatch) => {
     });
 };
 
-export const signupUser = (newUserData, history) => (dispatch) => {
+export const signupUser =  (newUserData, history) => async(dispatch) => {
   dispatch({ type: LOADING_UI });
-  axios
+  let res =  instance
     .post('/putUser', newUserData)
     .then((res) => {
       setAuthorizationHeader(res.data.token);
@@ -39,13 +48,14 @@ export const signupUser = (newUserData, history) => (dispatch) => {
 
 export const logoutUser = () => (dispatch) => {
   localStorage.removeItem('sessionToken');
-  delete axios.defaults.headers.common['Authorization'];
+  delete instance.defaults.headers.common['Authorization'];
   dispatch({ type: SET_UNAUTHENTICATED });
 };
 
+
 export const getUserData = () => (dispatch) => {
   dispatch({ type: LOADING_USER });
-  axios
+  instance
     .get('/user')
     .then((res) => {
       dispatch({
@@ -56,8 +66,11 @@ export const getUserData = () => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
+
 const setAuthorizationHeader = (token) => {
   const sessionToken = `Bearer ${token}`;
   localStorage.setItem('sessionToken', sessionToken);
-  axios.defaults.headers.common['Authorization'] = sessionToken;
+  instance.defaults.headers.common['Authorization'] = sessionToken;
 };
+
+
