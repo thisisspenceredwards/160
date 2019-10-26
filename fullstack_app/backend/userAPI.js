@@ -118,14 +118,16 @@ router.post('/login', async (req, res) =>
         if (checkEmail === false || checkPassword === false)
         {
             console.log("Unsuccessful login")
-            return res.send(JSON.stringify
+            return res.status(500).send("Invalid Login, Username or password is incorrect")
+            /*
+            return res.status(500).send(JSON.stringify
             ({
                 success: false,
                 email: email,
                 name: "invalid",
                 id: "invalid"
             })) 
-
+            */
         }
         else 
         {
@@ -166,13 +168,15 @@ router.post('/login', async (req, res) =>
             user.token = ''
             user.save()
             req.session.destroy(function(err){})
-            return res.send(JSON.stringify
-            ({
-                success: false,
-                email: email,
-                name: user.username,
-                id: user._id
-            })) 
+            return res.status(500).send("Invalid Login, Username or password is incorrect")
+
+          //  return res.send(JSON.stringify
+           // ({
+            //    success: false,
+             //   email: email,
+              //  name: user.username,
+               // id: user._id
+           // })) 
         }
     }
 })

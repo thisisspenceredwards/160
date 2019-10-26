@@ -1,19 +1,11 @@
 import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, LOADING_USER } from '../types';
 import axios from 'axios';
 
-const instance = axios.create({
-        timeout: 1000,
-        withCredentials:true,
-        headers: { crossDomain: true, 'Content-Type': 'application/json'}
-})
-
-
 export const loginUser = (userData, history) => (dispatch) => {
   dispatch({ type: LOADING_UI });
-  let res =  instance
+  let res =  axios
     .post('/login', userData)
     .then((res) => {
-            console.log("HERE");
       setAuthorizationHeader(res.data.token);
       dispatch(getUserData());
       dispatch({ type: CLEAR_ERRORS });
@@ -28,10 +20,10 @@ export const loginUser = (userData, history) => (dispatch) => {
     });
 };
 
-export const signupUser =  (newUserData, history) => async(dispatch) => {
+export const signupUser =  (newUserData, history) => (dispatch) => {
   dispatch({ type: LOADING_UI });
-  let res =  instance
-    .post('/putUser', newUserData)
+  let res =  axios
+    .put('/putUser', newUserData)
     .then((res) => {
       setAuthorizationHeader(res.data.token);
       dispatch(getUserData());
@@ -48,14 +40,14 @@ export const signupUser =  (newUserData, history) => async(dispatch) => {
 
 export const logoutUser = () => (dispatch) => {
   localStorage.removeItem('sessionToken');
-  delete instance.defaults.headers.common['Authorization'];
+  delete axios.defaults.headers.common['Authorization'];
   dispatch({ type: SET_UNAUTHENTICATED });
 };
 
 
 export const getUserData = () => (dispatch) => {
   dispatch({ type: LOADING_USER });
-  instance
+  axios
     .get('/user')
     .then((res) => {
       dispatch({
@@ -70,7 +62,7 @@ export const getUserData = () => (dispatch) => {
 const setAuthorizationHeader = (token) => {
   const sessionToken = `Bearer ${token}`;
   localStorage.setItem('sessionToken', sessionToken);
-  instance.defaults.headers.common['Authorization'] = sessionToken;
+  axios.defaults.headers.common['Authorization'] = sessionToken;
 };
 
 
