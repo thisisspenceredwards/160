@@ -4,7 +4,7 @@ import './App.css';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import themeFile from './util/theme';
-import jwtDecode from 'jwt-decode';
+// import jwtDecode from 'jwt-decode';
 
 //Redux
 import { Provider } from 'react-redux';
@@ -12,7 +12,7 @@ import store from './redux/store';
 
 // Components
 import Navbar from './components/Navbar';
-import AuthRoute from './util/AuthRoute';
+// import AuthRoute from './util/AuthRoute';
 
 // Pages
 import home from './pages/home';

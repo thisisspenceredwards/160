@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import MyButton from '../util/MyButton';
 // MUI Stuff
@@ -13,7 +13,7 @@ import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
 // Redux stuff
 import { connect } from 'react-redux';
-import { postPost } from '../redux/actions/dataActions';
+// import { postPost } from '../redux/actions/dataActions';
 
 const styles = {
   submitButton: {
@@ -47,7 +47,11 @@ class CreatePost extends Component {
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.postPost({ body: this.state.body });
+    // alert("this.state.body:" +this.state.body);
+    // this.props.postPost({ body: this.state.body });
+    // console.log("this.state.body: "+JSON.stringify(this.state.body));
+    const post_content = this.state.body;
+    this.props.postPost({ body: post_content });
   };
   render() {
     const {

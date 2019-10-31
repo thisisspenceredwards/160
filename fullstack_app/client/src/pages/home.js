@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import Post from '../components/Post';
 import CreatePost from '../components/CreatePost';
 
 import { connect } from 'react-redux';
-import { getPosts } from '../redux/actions/dataActions';
+import { getPosts, postPost } from '../redux/actions/dataActions';
 
 class home extends Component {
 	componentDidMount() {
-		this.props.getPosts();
+    this.props.getPosts();
 	}
 
 	render() {
 		const { posts } = this.props.data;
 		let recentPosts = posts ? (
-			posts.map((post) => <Post key={post.postId} post={post} />)
+			posts.map((post) => <Post key={post._id} post={post} />)
 		) : (
 		<p>Loading..</p>
 		);
@@ -38,5 +38,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { getPosts }
+  { postPost, getPosts }
 )(home);

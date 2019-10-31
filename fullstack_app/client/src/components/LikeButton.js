@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import MyButton from '../util/MyButton';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 // Icons
-import FavoriteIcon from '@material-ui/icons/Favorite';
+// import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 // REdux
 import { connect } from 'react-redux';
@@ -26,7 +26,7 @@ export class LikeButton extends Component {
     this.props.unlikePost(this.props.postId);
   };
   render() {
-    const { authenticated } = this.props.user;
+    // const { authenticated } = this.props.user;
     const likeButton = (
       <MyButton tip="Like" onClick={this.likePost}>
         <FavoriteBorder color="primary" />
