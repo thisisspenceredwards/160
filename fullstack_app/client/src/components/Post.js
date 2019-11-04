@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-// import { Link } from 'react-router-dom';
+import dayjs from'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 import MyButton from '../util/MyButton';
 import LikeButton from './LikeButton';
@@ -31,11 +32,12 @@ const styles = {
 
 class Post extends Component {
   render() {
+    dayjs.extend(relativeTime)
     const {
       classes,
       post: {
         body,
-        // createdAt,
+        createdAt,
         postId,
         likeCount,
         commentCount
@@ -46,7 +48,12 @@ class Post extends Component {
       <Card className={classes.card}>
     
         <CardContent className={classes.content}>
-          <Typography variant="body1">{body}</Typography>
+          <Typography variant="body1">
+            {body}
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            {dayjs(createdAt).fromNow()}
+          </Typography>
           <LikeButton screamId={postId} />
           <span>{likeCount} Likes</span>
           <MyButton tip="comments">

@@ -13,7 +13,7 @@ import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
 // Redux stuff
 import { connect } from 'react-redux';
-// import { postPost } from '../redux/actions/dataActions';
+import { postPost } from '../redux/actions/dataActions';
 
 const styles = {
   submitButton: {
@@ -117,4 +117,4 @@ const mapStateToProps = (state) => ({
   UI: state.UI
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(CreatePost));
+export default connect(mapStateToProps, { postPost })(withStyles(styles)(CreatePost));

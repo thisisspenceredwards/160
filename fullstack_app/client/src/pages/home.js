@@ -9,7 +9,7 @@ import { getPosts, postPost } from '../redux/actions/dataActions';
 
 class home extends Component {
 	componentDidMount() {
-    this.props.getPosts();
+    	this.props.getPosts();
 	}
 
 	render() {
@@ -20,13 +20,16 @@ class home extends Component {
 		<p>Loading..</p>
 		);
 		return (
-			<Grid container spacing={10}>
-				<Grid item sm={8} xs={12}>
+			<Grid 
+				container  
+				direction="column"
+				justify="center"
+				alignItems="center"
+				>
+				<Grid item xs={6}>
 					{recentPosts}
 				</Grid>	
-				<Grid item sm={4} xs={12}>
-					<CreatePost />
-				</Grid>	
+				 
 			</Grid>
 		);
 	}

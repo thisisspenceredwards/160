@@ -22,10 +22,6 @@ export default {
       form: {
         textAlign: "center"
       },
-      image: {
-        margin: "10px auto 10px auto",
-        minWidth: 200
-      },
       pageTitle: {
         margin: "10px auto 10px auto"
       },

@@ -144,7 +144,8 @@ router.post('/login', async (req, res) =>
                     success: true,
                     email: email,
                     name: user.username,
-                    id: user._id
+                    id: user._id,
+                    token: user.token
                 }))
             }
         }
@@ -159,7 +160,8 @@ router.post('/login', async (req, res) =>
                 success: true,
                 email: email,
                 name: user.username,
-                id: user._id
+                id: user._id,
+                token: user.token
             }))
         }
         else 

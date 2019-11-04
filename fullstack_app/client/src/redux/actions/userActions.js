@@ -3,7 +3,6 @@ import axios from 'axios';
 
 export const loginUser = (userData, history) => (dispatch) => {
   dispatch({ type: LOADING_UI });
-  // let res =
   axios
     .post('/login', userData)
     .then(
@@ -64,7 +63,7 @@ export const getUserData = () => (dispatch) => {
 
 
 const setAuthorizationHeader = (token) => {
-  const sessionToken = `Bearer ${token}`;
+  const sessionToken = `${token}`;
   localStorage.setItem('sessionToken', sessionToken);
   axios.defaults.headers.common['Authorization'] = sessionToken;
 };

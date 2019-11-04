@@ -23,6 +23,7 @@ class signup extends Component {
 			password: '',
 			confirmPassword: '',
 			username: '',
+			loading: false,
 			errors: {},
 		}
 	};
@@ -43,7 +44,7 @@ class signup extends Component {
 			password: this.state.password,
 			confirmPassword: this.state.confirmPassword,
 			username: this.state.username,
-		}
+		};
 		this.props.signupUser(newUserData, this.props.history);
 	};
 
@@ -67,6 +68,7 @@ class signup extends Component {
 						<TextField 
 							id="email" 
 							name="email"
+							type="email"
 							label="Email" 
 							className={classes.textField}
 							helperText={errors.email}
@@ -78,6 +80,7 @@ class signup extends Component {
 						<TextField 
 							id="password" 
 							name="password"
+							type="password"
 							label="Password" 
 							className={classes.textField}
 							helperText={errors.password}
@@ -89,6 +92,7 @@ class signup extends Component {
 						<TextField 
 							id="confirmPassword" 
 							name="confirmPassword"
+							type="password"
 							label="Confirm Password" 
 							className={classes.textField}
 							helperText={errors.confirmPassword}
@@ -100,6 +104,7 @@ class signup extends Component {
 						<TextField 
 							id="username" 
 							name="username"
+							type="text"
 							label="Username" 
 							className={classes.textField}
 							helperText={errors.username}
@@ -108,11 +113,11 @@ class signup extends Component {
 							onChange={this.handleChange} 
 							fullWidth 
 						/>
-			            {errors.general && (
-			              <Typography variant="body2" className={classes.customError}>
-			                {errors.general}
-			              </Typography>
-			            )}
+      {errors.general && (
+        <Typography variant="body2" className={classes.customError}>
+          {errors.general}
+        </Typography>
+      )}
 						<Button 
 							type="submit" 
 							variant="contained" 
@@ -121,9 +126,9 @@ class signup extends Component {
 							disabled={loading}
 						>
 						Signup
-		                {loading && (
-		                  <CircularProgress size={30} className={classes.progress} />
-		                )}
+      {loading && (
+        <CircularProgress size={30} className={classes.progress} />
+      )}
 						</Button>
 						<br />
 						<small>
