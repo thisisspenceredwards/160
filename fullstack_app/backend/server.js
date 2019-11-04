@@ -11,6 +11,7 @@ const userAPI = require('./userAPI.js');
 const postAPI = require('./postAPI.js');
 const topicAPI = require('./topicAPI.js');
 const orgAPI = require('./OrgAPI.js');
+const favoritesAPI = require('./favorites.js');
 
 const data = require('./data.js')
 const Data = data.Data
@@ -67,6 +68,7 @@ app.use('/api', userAPI);
 app.use('/api', topicAPI);
 app.use('/api', orgAPI);
 app.use('/api', postAPI);
+app.use('/api', favoritesAPI);
 // launch our backend into a port
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
 

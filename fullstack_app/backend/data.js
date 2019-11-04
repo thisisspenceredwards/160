@@ -53,6 +53,15 @@ const PostSchema = new Schema(
   },
   { timestamps: true },
 )
+
+const FavoritesSchema = new Schema(
+  {
+    postId: Schema.Types.ObjectId,
+    userId: Schema.Types.ObjectId,
+    like: Boolean
+  },
+  { timestamps: true },
+)
 // export the new Schema so we could modify it using Node.js
 // module.exports = mongoose.model("Data", DataSchema)
 
@@ -61,3 +70,4 @@ exports.Organization = mongoose.model("Organization", OrganizationSchema);
 exports.User = mongoose.model("User", UserSchema);
 exports.Topic = mongoose.model("Topic", TopicSchema);
 exports.Post = mongoose.model("Post", PostSchema);
+exports.Favorites = mongoose.model("Favorites", FavoritesSchema);
