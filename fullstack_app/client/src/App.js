@@ -8,6 +8,8 @@ import themeFile from './util/theme';
 //Redux
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import { SET_AUTHENTICATED } from './redux/types';
+import { logoutUser, getUserData } from './redux/actions/userActions';
 
 // Components
 import Navbar from './components/Navbar';
@@ -18,39 +20,42 @@ import home from './pages/home';
 import login from './pages/login';
 import signup from './pages/signup';
 
+import axios from 'axios';
+
 //Customize color with this tool
 //https://material-ui.com/customization/color/#color-tool
 const theme = createMuiTheme(themeFile);
 
-let authenticated;
 const token = localStorage.sessionToken;
 if(token) {
-  console.log(token);
-  authenticated = true;
+ console.log(token);
+ store.dispatch({ type: SET_AUTHENTICATED });
+ axios.defaults.headers.common['Authorization'] = token;
+ store.dispatch(getUserData());
 } else {
-  window.location.href='/login'
-  authenticated = false;
+ store.dispatch(logoutUser())
+ window.location.href='/login';
 }
 
 class App extends Component {
-  render() {
-    return (
-      <MuiThemeProvider theme={theme}>
-        <Provider store={store}>
-          <Router>
-            <Navbar />
-            <div className="container">
-              <Switch>
-                <Route exact path="/" component={home} />
-                <AuthRoute exact path="/login" component={login} authenticated={authenticated}/>
-                <AuthRoute exact path="/signup" component={signup} authenticated={authenticated}/>
-              </Switch>
-            </div>
-          </Router>
-        </Provider>
-      </MuiThemeProvider>
-    );
-  }
+ render() {
+  return (
+   <MuiThemeProvider theme={theme}>
+    <Provider store={store}>
+     <Router>
+      <Navbar />
+      <div className="container">
+       <Switch>
+        <Route exact path="/" component={home} />
+        <AuthRoute exact path="/login" component={login} />
+        <AuthRoute exact path="/signup" component={signup} />
+       </Switch>
+      </div>
+     </Router>
+    </Provider>
+   </MuiThemeProvider>
+  );
+ }
 }
 
 export default App;

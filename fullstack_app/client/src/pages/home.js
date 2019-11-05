@@ -13,8 +13,8 @@ class home extends Component {
 	}
 
 	render() {
-		const { posts } = this.props.data;
-		let recentPosts = posts ? (
+		const { posts, loading } = this.props.data;
+		let recentPosts = !loading ? (
 			posts.map((post) => <Post key={post._id} post={post} />)
 		) : (
 		<p>Loading..</p>
@@ -39,7 +39,4 @@ const mapStateToProps = (state) => ({
   data: state.data
 });
 
-export default connect(
-  mapStateToProps,
-  { postPost, getPosts }
-)(home);
+export default connect(mapStateToProps, { postPost, getPosts })(home);

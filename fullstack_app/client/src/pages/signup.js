@@ -23,7 +23,6 @@ class signup extends Component {
 			password: '',
 			confirmPassword: '',
 			username: '',
-			loading: false,
 			errors: {},
 		}
 	};
