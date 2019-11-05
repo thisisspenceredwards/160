@@ -32,10 +32,11 @@ if(token) {
  store.dispatch({ type: SET_AUTHENTICATED });
  axios.defaults.headers.common['Authorization'] = token;
  store.dispatch(getUserData());
-} else {
- store.dispatch(logoutUser())
- window.location.href='/login';
 }
+//  else {
+//  store.dispatch(logoutUser())
+//  window.location.href='/login';
+// }
 
 class App extends Component {
  render() {

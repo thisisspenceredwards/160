@@ -41,10 +41,28 @@ export const signupUser =  (newUserData, history) => (dispatch) => {
     });
 };
 
-export const logoutUser = () => (dispatch) => {
-  localStorage.removeItem('sessionToken');
-  delete axios.defaults.headers.common['Authorization'];
-  dispatch({ type: SET_UNAUTHENTICATED });
+export const logoutUser = (userData) => (dispatch) => {
+  axios
+    .post('/logout', userData)
+    .then(
+      (res) => {
+        localStorage.removeItem('sessionToken');
+        delete axios.defaults.headers.common['Authorization'];
+        dispatch({ type: SET_UNAUTHENTICATED });
+      }
+    )
+    .catch(
+      (err) => {
+        dispatch({
+          type: SET_ERRORS,
+          payload: err.response.data
+        });
+      }
+    );
+
+  // localStorage.removeItem('sessionToken');
+  // delete axios.defaults.headers.common['Authorization'];
+  // dispatch({ type: SET_UNAUTHENTICATED });
 };
 
 
