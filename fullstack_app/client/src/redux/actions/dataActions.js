@@ -3,9 +3,10 @@ import {
   LOADING_DATA,
   LIKE_POST,
   UNLIKE_POST,
+  DELETE_POST,
   SET_ERRORS,
   POST_POST,
-  // CLEAR_ERRORS,
+  CLEAR_ERRORS,
   LOADING_UI,
   SET_POST,
   STOP_LOADING_UI,
@@ -102,4 +103,13 @@ export const submitComment = (postId, commentData) => (dispatch) => {
         payload: err.response.data
       });
     });
+};
+// Delete a post
+export const deletePost = (postId) => (dispatch) => {
+  axios
+    .delete(`/post/${postId}`)
+    .then(() => {
+      dispatch({ type: DELETE_POST, payload: postId });
+    })
+    .catch((err) => console.log(err));
 };

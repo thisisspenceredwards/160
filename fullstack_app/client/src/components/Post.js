@@ -6,6 +6,8 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 
 import MyButton from '../util/MyButton';
 import LikeButton from './LikeButton';
+// import DeleteButton from './DeleteButton';
+
 // MUI Stuff
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -57,7 +59,8 @@ class Post extends Component {
         commentCount
       },
       user: {
-       authenticated
+       authenticated,
+       //credentials: { username }
       }
     } = this.props;
     const likeButton = !authenticated ? (
@@ -76,6 +79,10 @@ class Post extends Component {
      </MyButton>
     );
      
+    // const deleteButton = authenticated ? (
+    //  <DeleteButton postId={postId} />
+    //  ) : null
+
     return (
       <Card className={classes.card}>
     
@@ -95,6 +102,7 @@ class Post extends Component {
           </MyButton>
           <span>{commentCount} Comments</span>
 
+          
         </CardContent>
       </Card>
     );

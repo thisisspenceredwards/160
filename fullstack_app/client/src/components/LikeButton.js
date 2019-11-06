@@ -45,7 +45,4 @@ const mapActionsToProps = {
   unlikePost
 };
 
-export default connect(
-  mapStateToProps,
-  mapActionsToProps
-)(LikeButton);
+export default connect(mapStateToProps, mapActionsToProps)(LikeButton);

@@ -2,6 +2,7 @@ import {
   SET_POSTS,
   LIKE_POST,
   UNLIKE_POST,
+  DELETE_POST,
   LOADING_DATA,
   POST_POST,
   SET_POST,
@@ -48,6 +49,14 @@ export default function(state = initialState, action) {
       return {
         ...state,
         posts: [action.payload, ...state.posts]
+      };
+    case DELETE_POST:
+      index = state.post.findIndex(
+        (post) => post.postId === action.payload
+      );
+      state.posts.splice(index, 1);
+      return {
+        ...state
       };
     case SUBMIT_COMMENT:
       return {
