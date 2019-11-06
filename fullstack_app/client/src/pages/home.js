@@ -5,7 +5,7 @@ import Post from '../components/Post';
 import CreatePost from '../components/CreatePost';
 
 import { connect } from 'react-redux';
-import { getPosts, postPost } from '../redux/actions/dataActions';
+import { getPosts } from '../redux/actions/dataActions';
 
 class home extends Component {
 	componentDidMount() {
@@ -39,4 +39,4 @@ const mapStateToProps = (state) => ({
   data: state.data
 });
 
-export default connect(mapStateToProps, { postPost, getPosts })(home);
+export default connect(mapStateToProps, { getPosts })(home);
