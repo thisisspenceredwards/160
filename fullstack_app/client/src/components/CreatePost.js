@@ -60,7 +60,10 @@ class CreatePost extends Component {
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.createPost({ body: this.state.body });
+    this.props.createPost({body: this.state.body}, () => {
+    this.props.clearErrors();
+    this.setState({ open: false, errors: {} });
+  });
   };
   render() {
     const { errors } = this.state;

@@ -46,7 +46,7 @@ export const getPost = (postId) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 // Post something
-export const createPost = (newPost) => (dispatch) => {
+export const createPost = (newPost, handleClose) => (dispatch) => {
   dispatch({ type: LOADING_UI });
   axios
     .put('/post', newPost)
@@ -61,6 +61,8 @@ export const createPost = (newPost) => (dispatch) => {
         type: SET_ERRORS,
         payload: err.response.data
       });
+    }).then(() => {
+        handleClose();
     });
 };
 // Like a post
