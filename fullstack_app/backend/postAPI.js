@@ -67,7 +67,7 @@ router.get('/post', (req, res) =>
     if (userID)
         search['userID'] = userID;
 
-    Post.find(search).exec(
+    Post.find(search).sort('-createdAt').exec(
         function(err, posts) {
             if (err) res.send(err)
             res.json(posts)
