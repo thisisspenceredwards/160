@@ -14,7 +14,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 // Icons
 import ChatIcon from '@material-ui/icons/Chat';
-import DeleteIcon from '@material-ui/icons/Delete';
+// import DeleteIcon from '@material-ui/icons/Delete';
+import TouchAppIcon from '@material-ui/icons/TouchApp';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 // Redux
@@ -89,10 +90,11 @@ class Post extends Component {
     if (this.props.user.id === this.props.post.userID) {
         delete_button = (
             <span>
-                <MyButton tip="delete">
-                    <DeleteIcon color="primary" />
+                <MyButton tip="this is your post">
+                    {/*<DeleteIcon color="primary" />*/}
+                    <TouchAppIcon color="primary" />
                 </MyButton>
-                <span>Delete</span>
+                <span>Your post</span>
             </span>
         );
     } else {

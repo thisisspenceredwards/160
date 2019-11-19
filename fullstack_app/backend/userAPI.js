@@ -48,23 +48,34 @@ router.put('/putUser', [
  })
 
 router.get('/user', (req, res) => {
-    console.log("req.session: "+JSON.stringify(req.session))
-    User.findOne({email: req.session.email}).exec((outer_err, this_user) => {
-        console.log("this_user: "+JSON.stringify(this_user))
-        User.find().select(
-            '_id id username'
-            // '-password -email'
-        ).exec((err, data) => {
+    if (req.session.success === true) {
+        User.findOne({email: req.session.email}).exec((outer_err, this_user) => {
+            console.log("this_user: "+JSON.stringify(this_user))
+            User.find().select(
+                '_id id username'
+                // '-password -email'
+            ).exec((err, data) => {
+                if (err) return res.json({success: false, error: err});
+                return res.json({
+                    success: true,
+                    data: data,
+                    id: this_user.id,
+                    _id: this_user._id,
+                    username: this_user.username
+                });
+            })
+        });
+    }
+    else {
+        User.find().select('_id id username').exec((err, data) => {
             if (err) return res.json({success: false, error: err});
             return res.json({
                 success: true,
                 data: data,
-                id: this_user.id,
-                _id: this_user._id,
-                username: this_user.username
             });
-        })
-    });
+        });
+    }
+    // console.log("req.session: "+JSON.stringify(req.session))
 })
 
 // try this python code:
@@ -101,10 +112,6 @@ router.post('/logout', async (req, res) =>
             req.session.destroy(function(err){ return res.status(404).json({error: "user not found"})})
             user.token = ''
             user.save()
-            console.log("req.session.email: " + req.session.email)
-            console.log("req.session.token: " + req.session.token)
-            console.log("req.session.success: " + req.session.success)
-            console.log("user.token: " + user.token)
             return res.json(constants.SUCCESS_JSON)
         }
     }
