@@ -48,12 +48,24 @@ router.put('/putUser', [
  })
 
 router.get('/user', (req, res) => {
-    User.find((err, data) => {
-        if (err) return res.json({success: false, error: err});
-        return res.json({success: true, data: data});
-    })
+    console.log("req.session: "+JSON.stringify(req.session))
+    User.findOne({email: req.session.email}).exec((outer_err, this_user) => {
+        console.log("this_user: "+JSON.stringify(this_user))
+        User.find().select(
+            '_id id username'
+            // '-password -email'
+        ).exec((err, data) => {
+            if (err) return res.json({success: false, error: err});
+            return res.json({
+                success: true,
+                data: data,
+                id: this_user.id,
+                _id: this_user._id,
+                username: this_user.username
+            });
+        })
+    });
 })
-
 
 // try this python code:
 // keep visiting http://localhost:3001/api/session over and over
@@ -138,6 +150,7 @@ router.post('/login', async (req, res) =>
             req.session.token = token
             req.session.success = true
             let user = await authentication.getUser({email: req.session.email})
+            req.session._id = user._id
             user.token = token
             user.save()
             return res.send(JSON.stringify({

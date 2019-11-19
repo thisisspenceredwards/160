@@ -14,6 +14,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 // Icons
 import ChatIcon from '@material-ui/icons/Chat';
+import DeleteIcon from '@material-ui/icons/Delete';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 // Redux
@@ -56,13 +57,15 @@ class Post extends Component {
         createdAt,
         postId,
         likeCount,
-        commentCount
+        commentCount,
+        _id
       },
       user: {
        authenticated,
        //credentials: { username }
       }
     } = this.props;
+    // console.log("this.props.user: "+JSON.stringify(this.props.user));
     const likeButton = !authenticated ? (
      <MyButton tip="Like">
       <Link to="/login">
@@ -82,6 +85,19 @@ class Post extends Component {
     // const deleteButton = authenticated ? (
     //  <DeleteButton postId={postId} />
     //  ) : null
+    var delete_button;
+    if (this.props.user.id === this.props.post.userID) {
+        delete_button = (
+            <span>
+                <MyButton tip="delete">
+                    <DeleteIcon color="primary" />
+                </MyButton>
+                <span>Delete</span>
+            </span>
+        );
+    } else {
+        delete_button = <span></span>;
+    }
 
     return (
       <Card className={classes.card}>
@@ -101,6 +117,8 @@ class Post extends Component {
             <ChatIcon color="primary" />
           </MyButton>
           <span>{commentCount} Comments</span>
+
+          {delete_button}
 
           
         </CardContent>

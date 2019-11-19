@@ -9,6 +9,7 @@ const Post = models.Post
 
 router.put('/post', (req, res) =>
 {
+    console.log(`req.session: ${JSON.stringify(req.session)}`)
     let post = new Post()
     const {
         topicId,
@@ -24,6 +25,7 @@ router.put('/post', (req, res) =>
     post.subject = subject;
     post.parentPostId = parentPostId;
     post.body = body;
+    post.userID = req.session._id;
     post.save((err) => {
         if (err) {
             console.log(err)
@@ -36,12 +38,17 @@ router.put('/post', (req, res) =>
 
 router.get('/post', (req, res) =>
 {
+    if (!req.session.success) {
+        res.status(401).send({error: "not logged in"})
+        return;
+    }
     topicId = req.query['topicId'];
     subject = req.query['subject'];
     parentPostId = req.query['parentPostId'];
     body = req.query['body'];
     createdAt = req.query['createdAt'];
     updatedAt = req.query['updatedAt'];
+    userID = req.query['userID'];
     console.log(`updatedAt: ${updatedAt}`)
 
     var search = {};
@@ -57,6 +64,8 @@ router.get('/post', (req, res) =>
         search['createdAt'] = createdAt;
     if (updatedAt)
         search['updatedAt'] = updatedAt;
+    if (userID)
+        search['userID'] = userID;
 
     Post.find(search).exec(
         function(err, posts) {

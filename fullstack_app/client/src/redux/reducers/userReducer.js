@@ -6,6 +6,7 @@ const initialState = {
   credentials: {}, //NEED TO CHANGE BASED ON OUR API
   likes: [],
   notifications: [],
+  id: -1
 };
 
 export default function(state = initialState, action) {
@@ -21,6 +22,7 @@ export default function(state = initialState, action) {
       return {
         authenticated: true,
         loading: false,
+        id: action.payload._id,
         ...action.payload
       };
     case LOADING_USER:
