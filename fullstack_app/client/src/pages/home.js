@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 // import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import Post from '../components/Post';
-import CreatePost from '../components/CreatePost';
 
 import { connect } from 'react-redux';
 import { getPosts } from '../redux/actions/dataActions';

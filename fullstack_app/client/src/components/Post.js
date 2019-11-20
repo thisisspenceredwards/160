@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import dayjs from'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
 import MyButton from '../util/MyButton';
-import LikeButton from './LikeButton';
+// import LikeButton from './LikeButton';
 // import DeleteButton from './DeleteButton';
 
 // MUI Stuff
@@ -13,11 +13,11 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 // Icons
-import ChatIcon from '@material-ui/icons/Chat';
+// import ChatIcon from '@material-ui/icons/Chat';
 // import DeleteIcon from '@material-ui/icons/Delete';
 import TouchAppIcon from '@material-ui/icons/TouchApp';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+// import FavoriteIcon from '@material-ui/icons/Favorite';
+// import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 // Redux
 import { connect } from 'react-redux';
 import { likePost, unlikePost } from '../redux/actions/dataActions';
@@ -56,32 +56,32 @@ class Post extends Component {
       post: {
         body,
         createdAt,
-        postId,
-        likeCount,
-        commentCount,
-        _id
+        // postId,
+        // likeCount,
+        // commentCount,
+        // _id
       },
-      user: {
-       authenticated,
+      // user: {
+       // authenticated,
        //credentials: { username }
-      }
+      // }
     } = this.props;
     // console.log("this.props.user: "+JSON.stringify(this.props.user));
-    const likeButton = !authenticated ? (
-     <MyButton tip="Like">
-      <Link to="/login">
-       <FavoriteBorder color="primary" />
-      </Link>
-     </MyButton>
-    ) : this.likedPost() ? (
-     <MyButton tip="Undo like" onClick={this.unlikePost}>
-      <FavoriteIcon color="primary" />
-     </MyButton>
-    ) : (
-     <MyButton tip="Like" onClick={this.likePost}>
-      <FavoriteIcon color="primary" />
-     </MyButton>
-    );
+    // const likeButton = !authenticated ? (
+    //  <MyButton tip="Like">
+    //   <Link to="/login">
+    //    <FavoriteBorder color="primary" />
+    //   </Link>
+    //  </MyButton>
+    // ) : this.likedPost() ? (
+    //  <MyButton tip="Undo like" onClick={this.unlikePost}>
+    //   <FavoriteIcon color="primary" />
+    //  </MyButton>
+    // ) : (
+    //  <MyButton tip="Like" onClick={this.likePost}>
+    //   <FavoriteIcon color="primary" />
+    //  </MyButton>
+    // );
      
     // const deleteButton = authenticated ? (
     //  <DeleteButton postId={postId} />
@@ -112,14 +112,14 @@ class Post extends Component {
             {dayjs(createdAt).fromNow()}
           </Typography>
 
-          <LikeButton postId={postId} /> 
+{/*}          <LikeButton postId={postId} /> 
           <span>{likeCount} Likes</span>
           
           <MyButton tip="comments">
             <ChatIcon color="primary" />
           </MyButton>
           <span>{commentCount} Comments</span>
-
+*/}
           {delete_button}
 
           

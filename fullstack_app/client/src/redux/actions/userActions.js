@@ -25,7 +25,7 @@ export const loginUser = (userData, history) => (dispatch) => {
 
 export const signupUser =  (newUserData, history) => (dispatch) => {
   dispatch({ type: LOADING_UI });
-  let res = axios
+  axios
     .put('/putUser', newUserData)
     .then((res) => {
       setAuthorizationHeader(res.data.token);
