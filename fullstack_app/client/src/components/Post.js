@@ -86,9 +86,9 @@ class Post extends Component {
     // const deleteButton = authenticated ? (
     //  <DeleteButton postId={postId} />
     //  ) : null
-    var delete_button;
+    var your_post__button;
     if (this.props.user.id === this.props.post.userID) {
-        delete_button = (
+        your_post__button = (
             <span>
                 <MyButton tip="this is your post">
                     {/*<DeleteIcon color="primary" />*/}
@@ -98,7 +98,7 @@ class Post extends Component {
             </span>
         );
     } else {
-        delete_button = <span></span>;
+        your_post__button = <span></span>;
     }
 
     return (
@@ -120,7 +120,7 @@ class Post extends Component {
           </MyButton>
           <span>{commentCount} Comments</span>
 */}
-          {delete_button}
+          {/*your_post__button*/}
 
           
         </CardContent>
