@@ -38,10 +38,10 @@ router.put('/post', (req, res) =>
 
 router.get('/post', (req, res) =>
 {
-    if (!req.session.success) {
-        res.status(401).send({error: "not logged in"})
-        return;
-    }
+    // if (!req.session.success) {
+    //     res.status(401).send({error: "not logged in"})
+    //     return;
+    // }
     topicId = req.query['topicId'];
     subject = req.query['subject'];
     parentPostId = req.query['parentPostId'];
